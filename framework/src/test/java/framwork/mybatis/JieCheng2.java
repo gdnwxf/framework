@@ -2,12 +2,6 @@
 package framwork.mybatis;
 
 
- /**
-  *  
-  * @author <a href="mailto:wangch@zjport.gov.cn">wangch</a>
-  * @version $Id$   
-  * @since 2.0
-  */
 public class JieCheng2 {
 
 	
