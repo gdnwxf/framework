@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="placeholderConfig.wch" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:/config/jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" depends-on="placeholderConfig.wch">
+		<property name="driverClassName" value="${wch.datasource.driverClassName}" />
+		<property name="url" value="${wch.datasource.url}" />
+		<property name="username" value="${wch.datasource.userName}" />
+		<property name="password" value="${wch.datasource.password}" />
+		<property name="maxActive" value="${wch.datasource.maxActive}" />
+		<property name="maxIdle" value="${wch.datasource.maxIdle}" />
+		<property name="maxWait" value="${wch.datasource.maxWait}" />
+		<property name="initialSize" value="${wch.datasource.initialSize}" />
+		<property name="removeAbandoned" value="${wch.datasource.removeAbandoned}" />
+		<property name="removeAbandonedTimeout" value="${wch.datasource.removeAbandonedTimeout}" />
+		<property name="logAbandoned" value="${wch.datasource.logAbandoned}" />
+	</bean>
+
+
+	<!-- mybatis -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 数据源 -->
+		<property name="dataSource" ref="dataSource" />
+		<!-- 指定MyBatis配置文件 -->
+		<property name="configLocation" value="classpath:config/dao/mybatis.xml" />
+		<!-- 导入Mapper -->
+		<property name="mapperLocations" value="classpath:config/dao/sqlmap/**/*.xml" />
+	</bean>
+	<!-- 配置mybatis 与 spring结合 -->
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+
+	<bean id="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="modify*">PROPAGATION_REQUIRED</prop>
+				<prop key="move*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="log*">PROPAGATION_REQUIRED</prop>
+				<prop key="doProcess*">PROPAGATION_REQUIRED</prop>
+				<prop key="audit">PROPAGATION_REQUIRED</prop>
+				<prop key="send*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 事务相关 -->
+	<bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<!-- 配置通知模式 -->
+	<bean id="beanNameAutoProxyCreator" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<value>*Service</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>transactionInterceptor</value>
+			</list>
+		</property>
+	</bean>
+	<bean class="org.springframework.transaction.interceptor.TransactionAttributeSourceAdvisor">
+		<property name="transactionInterceptor" ref="transactionInterceptor" />
+	</bean>
+</beans>

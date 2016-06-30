@@ -1,0 +1,82 @@
+/* body{
+	     FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#b8c4cb,endColorStr=#f6f6f8);IE6
+		background:-moz-linear-gradient(top,#b8c4cb,#f6f6f8);非IE6的其它
+		background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#b8c4cb), to(#f6f6f8));非IE6的其它
+}
+ */
+ body{
+  margin-left:10px;
+  margin-top: 30px;
+ }
+textarea {
+   width: 160px ;
+   height: 25px;
+}
+select{
+   width: 162px;
+    height:30px;
+}
+input[type="text"],input[type="password"],input[type="file"] {
+	width:160px ;
+	height: 25px;
+}
+
+.table th {
+	height: auto;
+	font-size: 10px;
+	padding: 5px 10px 2px;
+	border-bottom: 0;
+	text-align: center;
+	color: #666666;
+}
+
+/*查询表格的css样式  */
+.queryForm{
+	margin-left:20px;
+}
+.querytable{padding: 2px;}
+.querytable{
+	border-collapse:collapse; 
+	border: 1px #D9D9D9 solid;
+	text-align: right;
+}
+.querytable input[type="text"]{width: 200px; height: 20px;}
+.querytable td{
+	padding:5px; 
+}
+.querytable tr:nth-child(odd){background:#EEEEEE;} 
+.querytable tr:HOVER{
+	background:#F9F9F9;
+}
+/*查询表格的css样式  */
+
+.table{
+/* 	border-spacing:5px; */
+	border-collapse:collapse; 
+	border: 1px #D9D9D9 solid;
+	text-align: right;
+}
+.table td{
+	padding: 5px;
+	/*  margin-right: 5px; */
+}
+/* 只适用于HTML5 */
+.table tr:nth-child(odd){background:#EEEEEE;} 
+/* .table td:nth-child(even){color:#C00;} */
+.table tr:HOVER{
+	background:#F9F9F9;
+}
+.form{
+	margin-left: 5px;
+}
+
+.panel-title {
+	font-size: 14px;
+	font-family: 宋体;
+	font-weight: bold;
+	color: #404040;
+	height: 16px;
+	line-height: 16px;
+}
+ 
+ 

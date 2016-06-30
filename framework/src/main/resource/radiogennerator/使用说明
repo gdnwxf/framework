@@ -1,0 +1,51 @@
+作者：张林
+
+以下功能和连接都是本项目所支持的，欢迎大家学习
+
+
+项目开发流程及架构详解：                                          http://zz563143188.iteye.com/blog/1825168 
+需求文档管理工具                                                               http://zz563143188.iteye.com/blog/1830393
+PowerDesinger逆向数据库物理模型及关系图    http://zz563143188.iteye.com/blog/1829068
+发散性思维工具(思维导图)推荐                                  http://zz563143188.iteye.com/blog/1831562
+推荐一款好用的笔记管理软件(Evernote)     http://zz563143188.iteye.com/blog/1830965
+数据库生成数据字典工具(PDMREAD)图解                 http://zz563143188.iteye.com/blog/1828557
+代码生动生成(POJO,DAO,Service,action)等     http://zz563143188.iteye.com/blog/1823042
+
+
+声明
+      今天我为大家做了一个 spring3 MVC 的例子，希望能对刚接触spring的朋友有所帮助。该流程属于大型项目的流程，涉及的知识比较希望大家耐心学习。
+
+正文：
+
+    1.演示项目源码下载地址 http://pan.baidu.com/share/link?shareid=372668&uk=4076915866    请下载codeFactory20130309,lib20130309文件或者更新的版本
+    2. mysql数据库位置/src/数据库脚本jeecms-db-2012-sp1.sql。
+    3.演示项目codeFactory发布到tomcat(tomcat6已放置百度网盘，需要设置JAVA环境变量才能用)中去，tomcat用户名是admin密码admin)
+    4.项目发布成功后访问的后台地址 ： http://127.0.0.1:8088/codeFactory/jeeadmin/jeecms/index.do
+    5.github查看项目地址      https://github.com/zl19861124/codeFactory   
+
+ 环境要求
+
+  1.开发环境：myeclipse8.5+/mysql+/tomcat +Jre1.6 + utf-8
+  2.工作目录：E:\workspace       Lib存放的目录: E:\workspace\lib-src
+  3. 数据库：mysql数据库名称：jeecms_2012_sp1  用户名：root,密码 root
+
+
+  本人只是将www.jeecms.com进行改变。目的是为了让大家了解jeecms,这样可以让大家学习。长虽然我工作很忙没有闲暇时间，但我还是愿意抽时间分享优秀的项目给大家学习。
+
+注意事项
+
+  1.本工程内容较多，可能需要设计编译目录：                                    http://zz563143188.iteye.com/blog/1826517
+  2.调试网页建议页面调试工具firebug                    http://zz563143188.iteye.com/blog/1825978
+  3.为了提高工作效率，可以使用Spring mvc 单元测试                 http://zz563143188.iteye.com/blog/1827454
+  4.Spring mvc整合hibernate                           http://zz563143188.iteye.com/blog/1831561
+  5.日志log4j配置springMvc例子                                                                  http://zz563143188.iteye.com/blog/1825387        
+  6.由于webroot下面的内容很多，可以设置不编译和验证
+  7. 根据jar生成源码工具                                                                                  http://zz563143188.iteye.com/blog/1826988   
+  8.java常用环境变量设置                                                                                   http://zz563143188.iteye.com/blog/1827884
+  
+架构分层图解：
+     1.后台工程 包命名规则以com.jeecms.cms.(分为以下图层),项目架构entity,dao,mng,action,html等结构如下图所示。
+     2.到这里通过单元测试类test类测试业务层与数据的操作，需要添加junit4到工程。
+     3.、感谢 www.jeecms.com提供了如何优秀的开源项目，以后还会推出权限、流程审批、maven、svn、代码自动生成(从建表到业务层代码界面显示，不需要写一行代码就自动实现)。
+
+ 
