@@ -1,0 +1,10 @@
+/** 
+	 *获取属性上的所有的注解
+	 */
+	public static Annotation [] getClassAnnotations(Field field) { 
+		return  field.getAnnotations();
+	}
+	
+	/**
+	 * 获取类上的注解
+	 */
