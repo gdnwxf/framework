@@ -23,14 +23,18 @@ public class CleanComment {
 				 if(pathname .isFile()) {
 					 try {
 						String readFileToString = FileUtils.readFileToString(pathname);
-						Pattern pattern = Pattern.compile("(/\\*\\*.*?(浙江电子口岸|@zjport).*?\\*/)", Pattern.DOTALL);
+					 	Pattern pattern = Pattern.compile("(/\\*\\*.*?\\*/)", Pattern.DOTALL);
 						Matcher matches = pattern.matcher(readFileToString);
-						if(matches.find()) {
+						while (matches.find()) {
 							String group = matches.group();
-							System.out.println(group);
-							System.out.println("---------------------------");
+							Pattern compile = Pattern.compile ("/\\*\\*.*?(浙江电子口岸|@zjport).*?\\*/" ,pattern.DOTALL);
+							Matcher matcher = compile.matcher(group);
+							if(matcher.find()) {
+								System.out.println(pathname);
+								readFileToString = readFileToString.replace(matcher.group(), "");
+							}
 						}
-						
+						FileUtils.writeToFile(readFileToString, pathname, true);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -63,7 +67,25 @@ public class CleanComment {
 	public void testReg2() throws Exception {
 		
 		String readFileToString = FileUtils.readFileToString(new File("D:\\mygithub\\github\\project\\framework\\framework\\src\\main\\java\\test2"));
-		Pattern pattern = Pattern.compile(".*/\\*\\*.?(浙江电子口岸|@zjport).*?\\*/", Pattern.DOTALL);
+		Pattern pattern = Pattern.compile("(/\\*\\*.*?\\*/)", Pattern.DOTALL);
+		Matcher matches = pattern.matcher(readFileToString);
+		while (matches.find()) {
+			String group = matches.group();
+			Pattern compile = Pattern.compile ("/\\*\\*.*?(浙江电子口岸|@zjport).*?\\*/" ,pattern.DOTALL);
+			Matcher matcher = compile.matcher(group);
+			if(matcher.find()) {
+				System.out.println(matcher.group());
+			}
+		}
+		
+	}
+
+
+	@Test
+	public void testReg3() throws Exception {
+		
+		String readFileToString = FileUtils.readFileToString(new File("D:\\mygithub\\github\\project\\framework\\framework\\src\\main\\java\\test3"));
+		Pattern pattern = Pattern.compile("(/\\*\\*).*?\\*/");
 		Matcher matches = pattern.matcher(readFileToString);
 		while (matches.find()) {
 			String group = matches.group();

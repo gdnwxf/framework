@@ -5,7 +5,7 @@ import java.io.Serializable;
 import com.wch.annotation.compent.Controller;
 
 @Controller
-public class User extends Person implements Serializable {
+public class User extends Person implements Serializable ,Cloneable {
 	
 	 /**    */
 	private static final long serialVersionUID = 1L;
@@ -87,4 +87,10 @@ public class User extends Person implements Serializable {
 	public String toString() {
 		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", email=" + email + ", qq=" + qq + ", gender=" + gender + ", birthday=" + birthday + ", status=" + status + "]";
 	}
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
+	
+	
 }
