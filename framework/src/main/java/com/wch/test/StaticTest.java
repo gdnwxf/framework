@@ -5,20 +5,20 @@ import java.util.Properties;
 
 public class StaticTest {
 	
-	final static Properties properties = new Properties();
+	final   Properties properties = new Properties();
 	
-	static {
+	  {
 		try {
-			properties.load(StaticTest.class.getClassLoader().getResourceAsStream("wch.properties"));
+			properties.load(MyClassloader.class.getClassLoader().getResourceAsStream("wch.properties"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public static void load() {
+	public   void load() {
 		try {
-		     properties.load(StaticTest.class.getClassLoader().getResourceAsStream("wch.properties"));
+		     properties.load(MyClassloader.class.getClassLoader().getResourceAsStream("wch.properties"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -26,27 +26,43 @@ public class StaticTest {
 	}
 	
 	
-	private static String prefix = "prefix";
-	public final  static  String  abc = "wch" + "abc";
 	
-	private static String xixi = prefix + "xixi" ;
-	public static String getPrefix() {
+	public StaticTest() {
+		System.out.println("触发实例化");
+	}
+
+
+
+	private String id  = "100";
+	private String name = "zs" ;
+	
+	
+	private   String prefix = "prefix";
+	public       String  abc = properties.getProperty("wch") + "abc";
+	
+	private   String xixi = prefix + "xixi" ;
+	public   String getPrefix() {
 		return prefix;
 	}
-	public static void setPrefix(String prefix) {
-		StaticTest.prefix = prefix;
-	}
-	public static String getAbc() {
+ 
+	public  String getAbc() {
 		return abc;
 	}
-	public static String getXixi() {
+	public  String getXixi() {
 		return xixi;
 	}
-	public static void setXixi(String xixi) {
-		StaticTest.xixi = xixi;
+ 
+	public String getName() {
+		return name;
 	}
-	
-	
-	
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 
 }
