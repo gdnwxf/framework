@@ -26,7 +26,8 @@ public class VelocityUtils {
 		 Single(ctx, writer, templateName, null );
 	}
 	public static void  Single(VelocityContext ctx, Writer writer ,String templateName,List<Macro> list) {
-		 Template t = Velocity.getTemplate(templateName);
+		 String innerTemplatePath = Thread.currentThread().getContextClassLoader().getResource("").toString()+templateName;
+		 Template t = Velocity.getTemplate(innerTemplatePath);
 		 t.merge(ctx, writer, list);
 	}
 	public static void  Single(VelocityContext ctx, String fileName ,String templateName) throws IOException {
