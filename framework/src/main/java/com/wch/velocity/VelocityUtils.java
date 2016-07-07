@@ -1,10 +1,12 @@
 package com.wch.velocity;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -15,22 +17,51 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 public class VelocityUtils {
 	
-	static {
+	public static void singleInit(Properties p) {
 		Properties ve = new Properties();
 		ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
 		ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+		ve.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH, Thread.currentThread().getContextClassLoader().getResource("").getPath());
+		if(p != null) {
+			Set<Object> keySet = p.keySet();
+			for (Object object : keySet) {
+				ve.setProperty((String) object, p.getProperty((String) object));
+			}
+		}
 		Velocity.init(ve);
 	}
 	
-	public static void  Single(VelocityContext ctx, Writer writer ,String templateName) {
-		 Single(ctx, writer, templateName, null );
+	public static  void singleInit() {
+		singleInit( (Properties) null) ;
 	}
-	public static void  Single(VelocityContext ctx, Writer writer ,String templateName,List<Macro> list) {
-		 String innerTemplatePath = Thread.currentThread().getContextClassLoader().getResource("").toString()+templateName;
-		 Template t = Velocity.getTemplate(innerTemplatePath);
-		 t.merge(ctx, writer, list);
+	
+	public static  void singleInit(String baseDir) {
+		Properties properties = null;
+		if(baseDir != null) {
+		    properties = new Properties();
+			properties.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH, Thread.currentThread().getContextClassLoader().getResource("").getPath()+ baseDir);
+		}
+		singleInit(properties) ;
 	}
-	public static void  Single(VelocityContext ctx, String fileName ,String templateName) throws IOException {
-		 Single(ctx, new FileWriter(fileName), null );
+	
+	
+	public static void  process(VelocityContext ctx, Writer writer ,String templateName) throws IOException {
+		 process(ctx, writer, templateName, null );
+	}
+	public static void  process(VelocityContext ctx, Writer writer ,String templateName,List<Macro> list) throws IOException {
+		 try {
+			Template t = Velocity.getTemplate(templateName);
+			t.merge(ctx, writer, list);
+		} finally {
+			writer.flush();
+			writer.close();
+		}
+	}
+	public static void  process(VelocityContext ctx, String fileName ,String templateName) throws IOException {
+		File file = new File(fileName);
+		if(!file.exists()) {
+			file.getParentFile().mkdirs();
+		}
+		process(ctx, new FileWriter(fileName), templateName ,null );
 	}
 }
