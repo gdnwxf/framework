@@ -52,7 +52,12 @@ public class VelocityUtils {
 	}
 	public static void  process(Map<String, Object> ctx, Writer writer ,String templateName,List<Macro> list) throws IOException {
 		 try {
-			 VelocityContext vContext = new VelocityContext(ctx);
+			 VelocityContext vContext = null;
+			 if(ctx == null) {
+				 vContext = new VelocityContext();
+			 }else {
+				 vContext = new VelocityContext(ctx);
+			}
 			Template t = Velocity.getTemplate(templateName);
 			t.merge(vContext, writer, list);
 		} finally {
