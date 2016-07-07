@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -45,19 +47,20 @@ public class VelocityUtils {
 	}
 	
 	
-	public static void  process(VelocityContext ctx, Writer writer ,String templateName) throws IOException {
+	public static void  process(Map<String, Object> ctx, Writer writer ,String templateName) throws IOException {
 		 process(ctx, writer, templateName, null );
 	}
-	public static void  process(VelocityContext ctx, Writer writer ,String templateName,List<Macro> list) throws IOException {
+	public static void  process(Map<String, Object> ctx, Writer writer ,String templateName,List<Macro> list) throws IOException {
 		 try {
+			 VelocityContext vContext = new VelocityContext(ctx);
 			Template t = Velocity.getTemplate(templateName);
-			t.merge(ctx, writer, list);
+			t.merge(vContext, writer, list);
 		} finally {
 			writer.flush();
 			writer.close();
 		}
 	}
-	public static void  process(VelocityContext ctx, String fileName ,String templateName) throws IOException {
+	public static void  process(Map<String, Object> ctx, String fileName ,String templateName) throws IOException {
 		File file = new File(fileName);
 		if(!file.exists()) {
 			file.getParentFile().mkdirs();

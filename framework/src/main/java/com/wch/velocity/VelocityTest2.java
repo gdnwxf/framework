@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.velocity.Template;
@@ -30,7 +32,7 @@ public class VelocityTest2 {
 		 
 		 
 		 Template t = Velocity.getTemplate("vm/Hellovelocity.vm");
-		 VelocityContext ctx = new VelocityContext();
+		 Map<String	, Object> ctx = new HashMap<String, Object>();
 		 
 		 ctx.put("name", "velocity");
 		 ctx.put("date", (new Date()).toString());
