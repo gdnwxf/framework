@@ -20,6 +20,8 @@ public class VelocityTest {
 		dataList.add("gdnwxf");
 		Map<String ,Object> data = new HashMap<String ,Object>();
 		data.put("names", dataList);
+		data.put("vals", new ArrayList<String>());
+		data.put("valsa",  123);
 		VelocityUtils.print(data,"test.vm");
 	}
 
