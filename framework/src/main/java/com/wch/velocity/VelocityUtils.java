@@ -3,7 +3,10 @@ package com.wch.velocity;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Writer;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +24,6 @@ public class VelocityUtils {
 	
 	public static void singleInit(Properties p) {
 		Properties ve = new Properties();
-		ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
 		ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
 		ve.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH, Thread.currentThread().getContextClassLoader().getResource("").getPath());
 		if(p != null) {
@@ -29,6 +31,8 @@ public class VelocityUtils {
 			for (Object object : keySet) {
 				ve.setProperty((String) object, p.getProperty((String) object));
 			}
+		}else {
+			ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
 		}
 		Velocity.init(ve);
 	}
@@ -37,11 +41,13 @@ public class VelocityUtils {
 		singleInit( (Properties) null) ;
 	}
 	
-	public static  void singleInit(String baseDir) {
+	public static  void singleInit(String baseDir) throws URISyntaxException {
 		Properties properties = null;
 		if(baseDir != null) {
 		    properties = new Properties();
-			properties.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH, Thread.currentThread().getContextClassLoader().getResource("").getPath()+ baseDir);
+			URL resource = Thread.currentThread().getContextClassLoader().getResource(baseDir);
+			String tempPath =  resource.getPath(); 
+			properties.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH, tempPath );
 		}
 		singleInit(properties) ;
 	}
@@ -71,5 +77,10 @@ public class VelocityUtils {
 			file.getParentFile().mkdirs();
 		}
 		process(ctx, new FileWriter(fileName), templateName ,null );
+	}
+	
+	public static void  print(Map<String, Object> ctx ,String templateName) throws IOException {
+		 PrintWriter printWriter = new PrintWriter(System.out);
+	     process(ctx, printWriter, templateName ,null );
 	}
 }

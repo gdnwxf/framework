@@ -3,6 +3,8 @@ package com.wch.velocity;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,18 +22,19 @@ public class VelocityTest2 {
 
 	
 	public static void main(String[] args) throws IOException {
-		
 		  
 		 
 		//单例模式
 		 Properties p = new Properties();
 		 p.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
-		 p.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH, Thread.currentThread().getContextClassLoader().getResource("").getPath());
-//		 p.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH, "D:/mygithub/github/project/framework/framework/target/classes/vm");
+//		 p.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH, Thread.currentThread().getContextClassLoader().getResource("").getPath());
+		 URL resource = Thread.currentThread().getContextClassLoader().getResource("vm");
+		 String tempPath = resource.getPath();
+ 		p.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH, tempPath);
 		 Velocity.init(p);
 		 
 		 
-		 Template t = Velocity.getTemplate("vm/Hellovelocity.vm");
+		 Template t = Velocity.getTemplate("Hellovelocity.vm");
 		 Map<String	, Object> ctx = new HashMap<String, Object>();
 		 
 		 ctx.put("name", "velocity");
@@ -44,9 +47,9 @@ public class VelocityTest2 {
 		 
 		 StringWriter sw = new StringWriter();
 		 
-//		 t.merge(ctx, sw);
-		 VelocityUtils.singleInit();
-		 VelocityUtils.process(ctx, "d:\\a\\hello.txt", "vm/Hellovelocity.vm");
+		 t.merge(new VelocityContext(ctx), sw);
+//		 VelocityUtils.singleInit();
+//		 VelocityUtils.process(ctx, "d:\\a\\hello.txt", "vm/Hellovelocity.vm");
 		 System.out.println(sw.toString());
 	}
 }
