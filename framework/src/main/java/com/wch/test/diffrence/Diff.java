@@ -14,7 +14,7 @@ public class Diff {
 
 	public static void main(String[] args) throws IOException {
 
-		final Set<String> dataSet = new HashSet<>(); 
+		final Set<String> dataSet = new HashSet<String>(); 
  		FileUtils.readFileToString(new File("D:\\mygithub\\github\\project\\framework\\framework\\src\\main\\java\\test"), new StringFilter() {
 			
 			@Override
@@ -26,7 +26,7 @@ public class Diff {
 		});
 		
  		
- 		final Set<String> dataSet2 = new HashSet<>(); 
+ 		final Set<String> dataSet2 = new HashSet<String>(); 
  		FileUtils.readFileToString(new File("D:\\mygithub\\github\\project\\framework\\framework\\src\\main\\java\\test1"), new StringFilter() {
 			
 			@Override

@@ -469,7 +469,7 @@ public class RequestMap extends HashMap<String, Object> implements Serializable 
         List<Map<String, Object>> list = (List<Map<String, Object>>) this.get(key);
         if (CollectionUtils.isEmpty(list))
             return null;
-        List<T> valueList = new ArrayList<>();
+        List<T> valueList = new ArrayList<T>();
         //遍历list集合
         for (Map<String, Object> map : list) {
             valueList.add(fillObjectwithMap(clazz, map));
