@@ -4,7 +4,26 @@
 <mapper namespace="nankang.dao.AgentMapper">
 
     <select id="getUsers"   resultType="hashmap">
-    	select * from tuser
-    </select>
+    	select * from userinfo
+    </select> 
+    
+  <update id="updateByPrimaryKeySelective" parameterType="hashmap" >
+    update userinfo
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="part != null" >
+        part = #{part,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=TINYINT},
+      </if>
+      <if test="da != null" >
+        da = #{da,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
 
 </mapper>

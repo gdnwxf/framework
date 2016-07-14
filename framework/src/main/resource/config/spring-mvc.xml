@@ -28,7 +28,7 @@
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />-->
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"  >
-    	 <property name="uploadTempDir" value = "/temp"></property>
+<!--     	 <property name="uploadTempDir" value = "d:/temp"></property> -->
     </bean>
 	<!-- ViewResolver配置(视图解析器) -->
 	<bean id="ViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
