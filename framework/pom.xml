@@ -10,9 +10,15 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-
+ 
 	<dependencies>
-	
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>1.16.8</version>
+		</dependency>
+			
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -168,6 +174,33 @@
     <groupId>commons-fileupload</groupId>
     <artifactId>commons-fileupload</artifactId>
     <version>1.3.2</version>
+</dependency> 
+
+<!-- https://mvnrepository.com/artifact/cz.msebera.android/httpclient -->
+<dependency>
+    <groupId>cz.msebera.android</groupId>
+    <artifactId>httpclient</artifactId>
+    <version>4.4.1.2</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/com.loopj.android/android-async-http -->
+<dependency>
+    <groupId>com.loopj.android</groupId>
+    <artifactId>android-async-http</artifactId>
+    <version>1.4.9</version>
+</dependency>  
+
+<!-- https://mvnrepository.com/artifact/com.google.android/android -->
+<dependency>
+    <groupId>com.google.android</groupId>
+    <artifactId>android</artifactId>
+    <version>4.1.1.4</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/com.android.tools.lint/lint-api -->
+<dependency>
+    <groupId>com.android.tools.lint</groupId>
+    <artifactId>lint-api</artifactId>
+    <version>25.1.2</version>
 </dependency>
 
 	</dependencies>

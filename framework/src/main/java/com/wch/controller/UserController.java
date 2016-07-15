@@ -60,6 +60,16 @@ public class UserController {
 	   System.out.println(request);
 		return "/index";
 	}
+	@RequestMapping(value = "/upload1"  )
+	public String upload( HttpServletRequest  request   ) throws IOException {
+		
+//		System.out.println(request.getParameterMap());
+//		System.out.println(request.getFileMap());
+//		System.out.println(request.getFile("fileName"));
+//		org.apache.commons.io.FileUtils.copyToFile(request.getFile("fileName").getInputStream(), new File("d:/2.txt"));
+		System.out.println(request);
+		return "/index";
+	}
 	@RequestMapping(value = "/upload2"  )
 	public String upload2( MultipartHttpServletRequest  request) throws IOException {
 
