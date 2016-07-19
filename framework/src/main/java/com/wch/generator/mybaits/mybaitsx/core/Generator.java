@@ -20,9 +20,9 @@ public class Generator {
 		List<GeneratedXmlFile> generatedXmlFiles = null;
 		List<String> warnings = new  ArrayList<String>();
 		Set<String> fullyQualifiedTableNames = new HashSet<String>();
-		fullyQualifiedTableNames.add("goods");
+		fullyQualifiedTableNames.add("account_info");
 		TableConfiguration tc = new TableConfiguration(mContext);
-		tc.setTableName("goods");
+		tc.setTableName("account_info");
 		mContext.addTableConfiguration(tc);
 		mContext.introspectTables(warnings, fullyQualifiedTableNames);
 		mContext.generateFiles(generatedJavaFiles, generatedXmlFiles, warnings);

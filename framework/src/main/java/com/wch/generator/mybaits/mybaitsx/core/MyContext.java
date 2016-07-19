@@ -1,10 +1,15 @@
 /*** Eclipse Class Decompiler plugin, copyright (c) 2016 Chen Chao (cnfree2000@hotmail.com) ***/
 package com.wch.generator.mybaits.mybaitsx.core;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.mybatis.generator.api.CommentGenerator;
@@ -17,6 +22,7 @@ import org.mybatis.generator.config.JavaTypeResolverConfiguration;
 import org.mybatis.generator.internal.PluginAggregator;
 import org.mybatis.generator.internal.db.ConnectionFactory;
 
+import com.wch.generator.mybaits.mybaitsx.bean.IntrospectedColumn;
 import com.wch.generator.mybaits.mybaitsx.bean.IntrospectedTable;
 import com.wch.generator.mybaits.mybaitsx.bean.ModelType;
 import com.wch.generator.mybaits.mybaitsx.bean.PluginConfiguration;
@@ -34,6 +40,7 @@ import com.wch.generator.mybaits.mybaitsx.domain.GeneratedXmlFile;
 import com.wch.generator.mybaits.mybaitsx.utils.Messages;
 import com.wch.generator.mybaits.mybaitsx.utils.ObjectFactory;
 import com.wch.generator.mybaits.mybaitsx.utils.StringUtility;
+import com.wch.velocity.VelocityUtils;
 
 public class MyContext extends PropertyHolder {
 	private String id;
@@ -313,6 +320,24 @@ public class MyContext extends PropertyHolder {
 //				XmlElemenetGenerator.getXmlUpdateList(introspectedTable, true);
 //				XmlElemenetGenerator.getDeleteList(introspectedTable, true);
 				
+				List<IntrospectedColumn>  primaryKeyColumns= introspectedTable.getPrimaryKeyColumns();
+				List<IntrospectedColumn> baseColumns = introspectedTable.getBaseColumns();
+			  
+				List<IntrospectedColumn> allColumns = new ArrayList<IntrospectedColumn>(primaryKeyColumns);
+				allColumns .addAll(baseColumns);
+				try {
+					VelocityUtils.singleInit("com/wch/generator/mybaits/mybaitsx/vmlib");
+					Map<String,Object> data = new HashMap<String,Object>();
+					data.put("primaryKeyColumns", primaryKeyColumns);
+					data.put("baseColumns", baseColumns);
+					data.put("allColumns", allColumns);
+					VelocityUtils.print(data, "mapperxml.vm");
+					
+				} catch (URISyntaxException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}

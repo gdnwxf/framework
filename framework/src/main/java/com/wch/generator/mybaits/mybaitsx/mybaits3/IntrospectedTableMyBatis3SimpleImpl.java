@@ -3,8 +3,6 @@ package com.wch.generator.mybaits.mybaitsx.mybaits3;
 
 import java.util.List;
 
-import org.mybatis.generator.api.ProgressCallback;
-
 import com.wch.generator.mybaits.mybaitsx.bean.IntrospectedTable;
 import com.wch.generator.mybaits.mybaitsx.domain.GeneratedJavaFile;
 import com.wch.generator.mybaits.mybaitsx.domain.GeneratedXmlFile;
@@ -20,7 +18,7 @@ public  class IntrospectedTableMyBatis3SimpleImpl extends IntrospectedTable
 	}
 
 	@Override
-	public void calculateGenerators(List<String> paramList, ProgressCallback paramProgressCallback) {
+	public void calculateGenerators(List<String> paramList) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -14,7 +14,6 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.mybatis.generator.config.ColumnOverride;
 import org.mybatis.generator.internal.db.ActualTableName;
 import org.mybatis.generator.logging.Log;
 import org.mybatis.generator.logging.LogFactory;

@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.mybatis.generator.api.ProgressCallback;
-
 import com.wch.generator.mybaits.mybaitsx.beanutils.FullyQualifiedTable;
 import com.wch.generator.mybaits.mybaitsx.beanutils.PropertyHolder;
 import com.wch.generator.mybaits.mybaitsx.beanutils.SqlMapGeneratorConfiguration;
@@ -704,7 +702,7 @@ public abstract class IntrospectedTable {
 		return (String) this.internalAttributes.get(IntrospectedTable.InternalAttribute.ATTR_ALIASED_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME);
 	}
 
-	public abstract void calculateGenerators(List<String> arg0, ProgressCallback arg1);
+	public abstract void calculateGenerators(List<String> arg0);
 
 	public abstract List<GeneratedJavaFile> getGeneratedJavaFiles();
 

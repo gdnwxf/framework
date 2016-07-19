@@ -2,7 +2,6 @@
 package com.wch.generator.mybaits.mybaitsx.mybaits3;
 
 import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.config.Context;
 import org.mybatis.generator.internal.util.StringUtility;
 
 public class MyBatis3FormattingUtilities

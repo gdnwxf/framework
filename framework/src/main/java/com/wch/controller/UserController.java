@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.google.gson.JsonObject;
 import com.wch.core.RequestMap;
 import com.wch.utils.file.FileUtils;
 import com.wch.utils.xutils.MapUtilsX;
@@ -72,7 +73,8 @@ public class UserController {
 	}
 	@RequestMapping(value = "/upload2"  )
 	public String upload2( MultipartHttpServletRequest  request) throws IOException {
-
+		JsonObject jObject = new JsonObject();
+		 
 		Map<String, String[]> parameterMap = request.getParameterMap();
 		Set<String> keySet = parameterMap.keySet();
 		for (String string : keySet) {
