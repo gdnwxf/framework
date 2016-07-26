@@ -38,6 +38,7 @@ public class FreemarkerUtils {
 				System.out.println("模板不存在!!!");
 				return;
 			}
+			templateDir = templateDir == null? null : Thread.currentThread().getContextClassLoader().getResource("").getPath() + templateDir; 
 			configuration.setDirectoryForTemplateLoading(templateDir == null ? file.getParentFile() : new File(templateDir));
 			Template template = configuration.getTemplate(templateDir == null ? file.getName() : ftlNameOrPathName, ENCODEING);
 			fileWriter = isPrint ? new  PrintWriter(System.out) : new FileWriter(path);
@@ -56,6 +57,44 @@ public class FreemarkerUtils {
 			}
 		}
 	}
+	/**
+	 * Process.
+	 *
+	 * @param object the object
+	 * @param templateDir the template dir
+	 * @param ftlNameOrPathName the ftl name or path name
+	 * @param path the path
+	 * @param isPrint the is print
+	 */
+	public static void process(Object object ,String templateDir , String ftlNameOrPathName , Writer writer)  {
+		Writer fileWriter = null;
+		try {
+			Configuration configuration = new Configuration(Configuration.getVersion());
+			templateDir = templateDir == null? null : Thread.currentThread().getContextClassLoader().getResource("").getPath() + templateDir; 
+			File file = new File(templateDir +File.separator+ ftlNameOrPathName);
+			if (!file.exists()) {
+				System.out.println("模板不存在!!!");
+				return;
+			}
+			configuration.setDirectoryForTemplateLoading(templateDir == null ? file.getParentFile() : new File(templateDir));
+			Template template = configuration.getTemplate(templateDir == null ? file.getName() : ftlNameOrPathName, ENCODEING);
+			fileWriter = writer; 
+			template.process(object, fileWriter);
+		} catch (TemplateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if(fileWriter!=null) {
+				try {
+					fileWriter.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	
 	/**
 	 * Process.

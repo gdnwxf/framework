@@ -1,12 +1,12 @@
 /*** Eclipse Class Decompiler plugin, copyright (c) 2016 Chen Chao (cnfree2000@hotmail.com) ***/
 package com.wch.generator.mybaits.mybaitsx.core;
 
+import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +20,6 @@ import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
 import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
 import org.mybatis.generator.config.JavaTypeResolverConfiguration;
 import org.mybatis.generator.internal.PluginAggregator;
-import org.mybatis.generator.internal.db.ConnectionFactory;
 
 import com.wch.generator.mybaits.mybaitsx.bean.IntrospectedColumn;
 import com.wch.generator.mybaits.mybaitsx.bean.IntrospectedTable;
@@ -40,9 +39,14 @@ import com.wch.generator.mybaits.mybaitsx.domain.GeneratedXmlFile;
 import com.wch.generator.mybaits.mybaitsx.utils.Messages;
 import com.wch.generator.mybaits.mybaitsx.utils.ObjectFactory;
 import com.wch.generator.mybaits.mybaitsx.utils.StringUtility;
-import com.wch.velocity.VelocityUtils;
+
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+
 
 public class MyContext extends PropertyHolder {
+	private static final String ENCODEING = "UTF-8";
 	private String id;
 	private JDBCConnectionConfiguration jdbcConnectionConfiguration;
 	private SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration;
@@ -320,24 +324,32 @@ public class MyContext extends PropertyHolder {
 //				XmlElemenetGenerator.getXmlUpdateList(introspectedTable, true);
 //				XmlElemenetGenerator.getDeleteList(introspectedTable, true);
 				
-				List<IntrospectedColumn>  primaryKeyColumns= introspectedTable.getPrimaryKeyColumns();
-				List<IntrospectedColumn> baseColumns = introspectedTable.getBaseColumns();
-			  
-				List<IntrospectedColumn> allColumns = new ArrayList<IntrospectedColumn>(primaryKeyColumns);
-				allColumns .addAll(baseColumns);
 				try {
-					VelocityUtils.singleInit("com/wch/generator/mybaits/mybaitsx/vmlib");
-					Map<String,Object> data = new HashMap<String,Object>();
-					data.put("primaryKeyColumns", primaryKeyColumns);
-					data.put("baseColumns", baseColumns);
-					data.put("allColumns", allColumns);
-					VelocityUtils.print(data, "mapperxml.vm");
+					List<IntrospectedColumn>  primaryKeyColumns= introspectedTable.getPrimaryKeyColumns();
+					List<IntrospectedColumn> baseColumns = introspectedTable.getBaseColumns();
+  
+					List<IntrospectedColumn> allColumns = new ArrayList<IntrospectedColumn>(primaryKeyColumns);
+					allColumns .addAll(baseColumns);
+					//具体的生成file
 					
-				} catch (URISyntaxException e) {
-					e.printStackTrace();
+					Map<String ,Object> data = new HashMap<String ,Object>();
+					data.put("introspectedTable", introspectedTable) ;
+					data.put("allColumns", allColumns) ;
+					data.put("primaryKeyColumns", primaryKeyColumns) ;
+					data.put("baseColumns", baseColumns) ;
+					PrintWriter writer = new PrintWriter(System.out);
+					Configuration configuration = new Configuration(Configuration.getVersion());
+					configuration.setDirectoryForTemplateLoading(new File( Thread.currentThread().getContextClassLoader().getResource("").getPath() + "com/wch/generator/mybaits/mybaitsx/ftllib"));
+					Template template = configuration.getTemplate("Mapper.xml.ftl", ENCODEING);
+					template.process(data, writer);
 				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (TemplateException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			 
 			}
 		}
 	}

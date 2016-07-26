@@ -11,8 +11,12 @@ public class HelloBtrace {
 	
 	public String doWork(String str,Integer str2) {
 		logger.debug("logger {}", "test");
-		if(str2 == null)
-		throw new NullPointerException("你好啊");
+		if(str2 == null) {
+			throw new NullPointerException("你好啊1");
+		}
+		if(str == null) {
+			throw new IllegalArgumentException("你好啊2");
+		}
 		return str + "wch" + str2;
 	}
 	
@@ -23,10 +27,9 @@ public class HelloBtrace {
 		while (true) {
 		TimeUnit.SECONDS.sleep(5);
 			try {
-				System.out.println(HelloBtrace.doWork("321" ,  null));
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println(e.getMessage());
+				System.out.println(HelloBtrace.doWork(null ,  null));
+			} catch (RuntimeException e) {
+				System.out.println(e);
 			}
 		}
 	}
