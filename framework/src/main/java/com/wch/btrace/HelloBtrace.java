@@ -2,8 +2,12 @@ package com.wch.btrace;
 
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory; 
+import org.slf4j.LoggerFactory;
+
+import com.wch.springframework.util.Assert; 
 
 public class HelloBtrace {
 	
@@ -11,6 +15,7 @@ public class HelloBtrace {
 	
 	public String doWork(String str,Integer str2) {
 		logger.debug("logger {}", "test");
+		Assert.notNull(str2);
 		if(str2 == null) {
 			throw new NullPointerException("你好啊1");
 		}
@@ -29,7 +34,12 @@ public class HelloBtrace {
 			try {
 				System.out.println(HelloBtrace.doWork(null ,  null));
 			} catch (RuntimeException e) {
-				System.out.println(e);
+				e.printStackTrace();
+				StackTraceElement[] stackTrace = e.getStackTrace();
+				System.out.println(ToStringBuilder.reflectionToString(stackTrace[stackTrace.length-1], ToStringStyle.SIMPLE_STYLE));
+				System.out.println("==================");
+				System.out.println(ToStringBuilder.reflectionToString(stackTrace[stackTrace.length-1], ToStringStyle.DEFAULT_STYLE));
+				 
 			}
 		}
 	}
