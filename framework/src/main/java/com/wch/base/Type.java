@@ -37,7 +37,7 @@ public class Type {
 		if("boolean".equals(name)) { return true; }
 		
 		return false;
-	} 
+	}  
 	
 	public static boolean isArray( Object object) {
 		Assert.notNull(object);

@@ -10,15 +10,12 @@ import com.wch.service.UserService;
 public class UserServiceImpl implements  UserService {
 
 
-	
-	@Autowired
-	private SqlSessionTemplate template;
+	 
 	
 	@Override
 	public  void update() {
 		// TODO Auto-generated method stub
-
-		System.out.println(template);
+ 
 	}
 
 }
