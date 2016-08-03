@@ -64,7 +64,7 @@ public class GeneratorFile {
 		javaTypeResolver.addProperty("forceBigDecimals", "false");
 		context.setJavaTypeResolverConfiguration(javaTypeResolver);
 		
-		TableConfiguration tc = getTableConfig(context, "shopuser", "shopuser");
+		TableConfiguration tc = getTableConfig(context, "attachment", "attachment");
 	    context.addTableConfiguration(tc);
 
 	    JavaModelGeneratorConfiguration javaModel = new JavaModelGeneratorConfiguration();
