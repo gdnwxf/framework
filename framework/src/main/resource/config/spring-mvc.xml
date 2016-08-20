@@ -20,7 +20,7 @@
 
 	<!-- 启用注解装配(@Autowired)-->
 	 <context:annotation-config />
-
+	<mvc:annotation-driven />
 	<!-- 启动Spring的组件自动扫描机制 -->
 	<context:component-scan base-package="com.wch.controller,com.wch.service" ></context:component-scan>
 
@@ -35,5 +35,9 @@
 		<property name="prefix" value="/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-
+		 	    <!-- 所有swagger目录的访问，直接访问location指定的目录 -->
+	<mvc:resources mapping="/swagger/**" location="/WEB-INF/swagger/"/>
+    <!-- 对静态资源文件的访问 不支持访问WEB-INF目录 -->  
+    <mvc:default-servlet-handler />  
+	<bean id="springSwaggerConfig" class="com.mangofactory.swagger.configuration.SpringSwaggerConfig" />
 </beans>

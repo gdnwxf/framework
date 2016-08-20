@@ -1,7 +1,6 @@
 package com.wch.controller;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
@@ -9,22 +8,18 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.task.AsyncTaskExecutor;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.google.gson.JsonObject;
 import com.wch.core.RequestMap;
-import com.wch.utils.file.FileUtils;
 import com.wch.utils.xutils.MapUtilsX;
 import com.wch.utils.xutils.bean.PersonBean;
+import com.wordnik.swagger.annotations.ApiOperation;
 
 @Controller("userController")
 @RequestMapping("/user")
@@ -48,6 +43,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/user3"  )
+	@ApiOperation(value = "根据用户名获取用户对象", httpMethod = "GET",    notes = "根据用户名获取用户对象")
 	public String index() {
 		System.out.println("你好啊2222");
 		return "/index";
