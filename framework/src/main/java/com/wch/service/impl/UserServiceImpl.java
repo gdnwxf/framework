@@ -1,21 +1,30 @@
 package com.wch.service.impl;
 
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wch.dao.mapper.UserInfoMapper;
+import com.wch.domain.UserInfo;
 import com.wch.service.UserService;
 
 @Service("userService")
 public class UserServiceImpl implements  UserService {
 
-
+	@Autowired
+	private UserInfoMapper userInfoMapper;
 	 
 	
-	@Override
 	public  void update() {
-		// TODO Auto-generated method stub
- 
+		UserInfo record = new UserInfo();
+		record.setId(1l);
+		record.setDa(6l);
+		userInfoMapper.updateByPrimaryKey(record);
+	}
+	
+	
+	@Override
+	public void xiugai() {
+		this.update();
 	}
 
 }

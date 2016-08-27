@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.google.gson.JsonObject;
 import com.wch.core.RequestMap;
+import com.wch.service.UserService;
 import com.wch.utils.xutils.MapUtilsX;
 import com.wch.utils.xutils.bean.PersonBean;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -30,6 +32,9 @@ public class UserController {
 		System.out.println("----");
 	}
 
+	@Autowired
+	private UserService userServicer;
+	
 	/**
 	 */
 	public UserController() {
@@ -92,6 +97,15 @@ public class UserController {
 	public String getUser(PersonBean personBean ) {
 		System.out.println(MapUtilsX.transBean2Map(personBean));
 		System.out.println("你好啊");
+		return "/index";
+	}
+	/**
+	 * 事务测试
+	 * @return
+	 */
+	@RequestMapping(value = "/transaction" )
+	public String transaction() {
+		userServicer.xiugai();
 		return "/index";
 	}
 

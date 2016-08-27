@@ -34,6 +34,11 @@
 		<!-- 导入Mapper -->
 		<property name="mapperLocations" value="classpath:config/dao/sqlmap/**/*.xml" />
 	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+<!--         <property name="basePackage" value="com.dfire.retail.**.mapper" /> -->
+        <property name="basePackage" value="com.wch.dao.mapper" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+    </bean>
 	<!-- 配置mybatis 与 spring结合 -->
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />

@@ -25,7 +25,7 @@ public class Test {
 	public void test01() throws SQLException{
 		Session session = SessionFactory.getInstance().openSession();
 		Transaction transaction1 = session.getTransaction();
-		Session session1 = SessionFactory.getInstance("jdbcConfig2.properties").openSession();
+		Session session1 = SessionFactory.getInstance("jdbcConfig.properties").openSession();
 		Transaction transaction2 = session1.getTransaction();
 		Query createQuery = session.createQuery("select count(1) from tuser");
 		System.out.println(createQuery.uniqueResult());
@@ -36,6 +36,22 @@ public class Test {
 		 XAResource xaResource1 = new MysqlXAConnection((ConnectionImpl) connection, true);
 		Xid xid1 = new MysqlXid("".getBytes(), "".getBytes(), 100);
 		Xid xid2 = new MysqlXid("".getBytes(), "".getBytes(), 100);
+		
+		
+	}
+	
+	
+	@org.junit.Test
+	public void test03() throws SQLException{
+		Session session = SessionFactory.getInstance("jdbcConfig.properties").openSession();
+		Transaction transaction1 = session.getTransaction();
+		Session session1 = SessionFactory.getInstance("jdbcConfig.properties").openSession();
+		Transaction transaction2 = session1.getTransaction();
+//		session.executeUpdate("update accountinfo a where a.id  = '203' ");
+//		session1.executeUpdate("update accountinfo a where a.id  = '203' ");
+		
+		transaction1.commit();
+		transaction2.commit();
 		
 		
 	}
