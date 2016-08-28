@@ -2,6 +2,10 @@ package com.wch.domain;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import lombok.ast.This;
+
 public class UserInfo implements Serializable {
     private Long id;
 
@@ -96,5 +100,11 @@ public class UserInfo implements Serializable {
         result = prime * result + ((getDsadsa() == null) ? 0 : getDsadsa().hashCode());
         result = prime * result + ((getDa() == null) ? 0 : getDa().hashCode());
         return result;
+    }
+    
+    @Override
+    public String toString() {
+    	// TODO Auto-generated method stub
+    	return ToStringBuilder.reflectionToString(this);
     }
 }

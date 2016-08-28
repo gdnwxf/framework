@@ -33,7 +33,7 @@ public class UserController {
 	}
 
 	@Autowired
-	private UserService userServicer;
+	private UserService userService;
 	
 	/**
 	 */
@@ -105,7 +105,8 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/transaction" )
 	public String transaction() {
-		userServicer.xiugai();
+		userService.xiugai();
+		userService.update();
 		return "/index";
 	}
 
