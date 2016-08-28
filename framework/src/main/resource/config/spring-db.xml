@@ -61,7 +61,7 @@
 				<prop key="new*">PROPAGATION_REQUIRES_NEW</prop>
 				<prop key="audit">PROPAGATION_REQUIRED</prop>
 				<prop key="send*">PROPAGATION_REQUIRED</prop>
-				<prop key="*">PROPAGATION_NOT_SUPPORTED,readOnly</prop>
+				<prop key="*">PROPAGATION_SUPPORTS,readOnly</prop>
 <!-- 				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop> -->
 			</props>
 		</property>

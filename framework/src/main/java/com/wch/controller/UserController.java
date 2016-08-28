@@ -106,7 +106,7 @@ public class UserController {
 	@RequestMapping(value = "/transaction" )
 	public String transaction() {
 		userService.xiugai();
-		userService.update();
+//		userService.update();
 		return "/index";
 	}
 

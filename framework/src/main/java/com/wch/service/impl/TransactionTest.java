@@ -8,7 +8,7 @@ import com.wch.domain.UserInfo;
  
 
 
-@Service
+@Service("BaseTransactionTestService")
 public class TransactionTest implements BaseTransactionTest {
 	
 	@Autowired
@@ -17,6 +17,7 @@ public class TransactionTest implements BaseTransactionTest {
 	public void update() {
 		UserInfo record = new UserInfo();
 		record.setId(1l);
+		record.setPart("wubiiiiii");
 		record.setDa(8l);
 		userInfoMapper.updateByPrimaryKey(record);
 	}
@@ -31,6 +32,13 @@ public class TransactionTest implements BaseTransactionTest {
 		userInfoMapper.updateByPrimaryKey(record);
 		System.out.println("new update");
 	}
+	
+	@Override
+	public void selectById() {
+		// TODO Auto-generated method stub
+		UserInfo selectByPrimaryKey = userInfoMapper.selectByPrimaryKey(1l);
+		System.out.println(selectByPrimaryKey);
+	}
 }
 
 
@@ -41,4 +49,5 @@ interface BaseTransactionTest {
 	
 	void newUpdate();
 	
+	void selectById();
 } 
