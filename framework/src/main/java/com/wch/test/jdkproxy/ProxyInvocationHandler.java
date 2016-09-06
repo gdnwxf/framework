@@ -24,6 +24,7 @@ public class ProxyInvocationHandler implements  InvocationHandler {
 
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+		//proxy 这个proxy 是jvm内置的
 		if(method.getName().equals("doBusiness")) {
 			System.out.println("方法调用前");
 		}
