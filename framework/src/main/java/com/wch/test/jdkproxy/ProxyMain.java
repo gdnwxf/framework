@@ -15,7 +15,7 @@ public class ProxyMain {
 		ProxyTarget proxyTarget =  (ProxyTarget) Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(),
 				new Class<?> [] {ProxyTarget.class }, h);
 //		
-		
+		 
 		proxyTarget.doBusiness();
 		
 		
