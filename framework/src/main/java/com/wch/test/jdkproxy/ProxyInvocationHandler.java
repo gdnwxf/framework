@@ -28,6 +28,7 @@ public class ProxyInvocationHandler implements  InvocationHandler {
 		//proxy 是提调用这个方法的本身
 		//proxy 这个proxy 是jvm内置的
 		//proxy 这个proxy 是jdk内置的代理对象class com.sun.proxy.$Proxy0 
+		//proxy 这个proxy 是对当前InvocationHandler的一个封装
 		
 		if(method.getName().equals("doBusiness")) {
 			System.out.println("方法调用前");
