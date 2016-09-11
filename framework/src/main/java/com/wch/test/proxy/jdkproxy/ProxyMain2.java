@@ -1,16 +1,18 @@
-package com.wch.test.jdkproxy;
+package com.wch.test.proxy.jdkproxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
-public class ProxyMain {
+/**
+ * jdk 的动态代理只依赖于接口
+ * @author wch
+ *
+ */
+public class ProxyMain2 {
 	
 	public static void main(String[] args) {
-		
-		ProxyTarget proxyTarget1 = new ProxyTargetImpl();
-		
-		
-		InvocationHandler h = new ProxyInvocationHandler(proxyTarget1);
+			
+		InvocationHandler h = new ProxyInvocationHandler();
 		
 		ProxyTarget proxyTarget =  (ProxyTarget) Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(),
 				new Class<?> [] {ProxyTarget.class }, h);

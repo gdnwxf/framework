@@ -1,4 +1,4 @@
-package com.wch.test.jdkproxy;
+package com.wch.test.proxy.jdkproxy;
 
 public interface ProxyTarget {
 
