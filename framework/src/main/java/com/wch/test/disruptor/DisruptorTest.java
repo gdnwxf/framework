@@ -21,7 +21,7 @@ public class DisruptorTest {
 	public static void main(String[] args) {
 		EventFactory<LongEvent> eventFactory = new LongEventFactory();
 		ExecutorService executor = Executors.newSingleThreadExecutor();
-		int ringBufferSize = 1024 * 1024; // RingBuffer 大小，必须是 2 的 N 次方；
+		int ringBufferSize = 2 * 2; // RingBuffer 大小，必须是 2 的 N 次方；
 		        
 		final Disruptor<LongEvent> disruptor = new Disruptor<LongEvent>(eventFactory,
 		                ringBufferSize, executor, ProducerType.SINGLE,
