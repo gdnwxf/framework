@@ -27,9 +27,9 @@ public class DisruptorTest {
 		                ringBufferSize, executor, ProducerType.SINGLE,
 		                new YieldingWaitStrategy());
 		        
-		EventHandler<LongEvent> eventHandler = new LongEventHandler();
+//		EventHandler<LongEvent> eventHandler = new LongEventHandler();
 		
-		disruptor.handleEventsWith(eventHandler);
+//		disruptor.handleEventsWith(eventHandler);
 		        
 		final RingBuffer<LongEvent> ringBuffer = disruptor.getRingBuffer();
 	    
