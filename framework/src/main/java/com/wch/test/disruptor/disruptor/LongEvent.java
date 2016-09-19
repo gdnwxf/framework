@@ -1,10 +1,6 @@
 package com.wch.test.disruptor.disruptor;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import lombok.ast.This;
 
 public class LongEvent
 {
