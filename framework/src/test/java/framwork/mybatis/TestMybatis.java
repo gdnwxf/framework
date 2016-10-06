@@ -1,8 +1,6 @@
 
 package framwork.mybatis;
 
-import static org.junit.Assert.*;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +14,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.github.abel533.sql.SqlMapper;
-import com.wch.service.UserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/beans.xml")
@@ -29,13 +26,17 @@ public class TestMybatis {
 	
 //	@Autowired
 //	UserService userService; 
+	@Autowired
+	private SqlSessionTemplate sqlSessionTemplate;
+	
+	
 	@Test
 	public void testSqlHelper() throws Exception {
-		/*List<Map<String, Object>> selectList = sqlSessionTemplate.selectList("getUsers");
-		for (Map<String, Object> map : selectList) {
-			System.out.println(map);
-			
-		}*/
+//		List<Map<String, Object>> selectList = sqlSessionTemplate.selectList("nankang.dao.AgentMapper.getUsers");
+//		for (Map<String, Object> map : selectList) {
+//			System.out.println(map);
+//			
+//		}
 //		List<Map<String, Object>> selectList2 = mapper.selectList("select t.* from tuser t where t.userid= 1");
 //		for (Map<String, Object> map : selectList2) {
 //			System.out.println(map);

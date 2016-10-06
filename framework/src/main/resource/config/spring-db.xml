@@ -89,4 +89,5 @@
 	<bean class="org.springframework.transaction.interceptor.TransactionAttributeSourceAdvisor">
 		<property name="transactionInterceptor" ref="transactionInterceptor" />
 	</bean>
+	<bean id="springSwaggerConfig" class="com.mangofactory.swagger.configuration.SpringSwaggerConfig" />
 </beans>

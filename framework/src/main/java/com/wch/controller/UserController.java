@@ -26,7 +26,6 @@ import com.wordnik.swagger.annotations.ApiOperation;
 @Controller("userController")
 @RequestMapping("/user")
 public class UserController {
-	
 
 	static {
 		System.out.println("----");
