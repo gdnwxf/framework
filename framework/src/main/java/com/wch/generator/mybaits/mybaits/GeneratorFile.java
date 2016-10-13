@@ -44,7 +44,7 @@ public class GeneratorFile {
 		JDBCConnectionConfiguration jdbcInfo = new JDBCConnectionConfiguration();
 		jdbcInfo.setUserId("retail");
 		jdbcInfo.setPassword("retail552208");
-		jdbcInfo.setConnectionURL("jdbc:mysql://10.1.1.20:3306/retail");
+		jdbcInfo.setConnectionURL("jdbc:mysql://10.1.5.113:3306/retail");
 		jdbcInfo.setDriverClass("com.mysql.jdbc.Driver");
 		context.setJdbcConnectionConfiguration(jdbcInfo);
 		
@@ -64,7 +64,7 @@ public class GeneratorFile {
 		javaTypeResolver.addProperty("forceBigDecimals", "false");
 		context.setJavaTypeResolverConfiguration(javaTypeResolver);
 		
-		TableConfiguration tc = getTableConfig(context, "attachment", "attachment");
+		TableConfiguration tc = getTableConfig(context, "saleskindcard", "saleskindcard");
 	    context.addTableConfiguration(tc);
 
 	    JavaModelGeneratorConfiguration javaModel = new JavaModelGeneratorConfiguration();
