@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/framework/framwork.iml" filepath="$PROJECT_DIR$/framework/framwork.iml" />
+      <module fileurl="file://$PROJECT_DIR$/guice/guice.iml" filepath="$PROJECT_DIR$/guice/guice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/messagequeue/messagequeue.iml" filepath="$PROJECT_DIR$/messagequeue/messagequeue.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring/spring.iml" filepath="$PROJECT_DIR$/spring/spring.iml" />
+    </modules>
+  </component>
+</project>

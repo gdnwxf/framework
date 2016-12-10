@@ -1,5 +1,6 @@
 package com.wch.service.impl;
 
+import com.wch.service.BaseTransactionTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,12 +43,3 @@ public class TransactionTest implements BaseTransactionTest {
 }
 
 
-
-interface BaseTransactionTest {
-
-	void update();
-	
-	void newUpdate();
-	
-	void selectById();
-} 
