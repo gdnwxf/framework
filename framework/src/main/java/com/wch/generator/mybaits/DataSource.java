@@ -1,9 +1,11 @@
 package com.wch.generator.mybaits;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 import java.util.Properties;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -12,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DataSource {
+public class DataSource implements javax.sql.DataSource {
 
 	private static Logger logger = LoggerFactory.getLogger(DataSource.class);
 
@@ -116,6 +118,53 @@ public class DataSource {
 			connections.put(connection);
 		} catch (InterruptedException e) {
 		}
+	}
+
+	@Override
+	public PrintWriter getLogWriter() throws SQLException {
+		 return DriverManager.getLogWriter();
+	}
+
+	@Override
+	public void setLogWriter(PrintWriter out) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setLoginTimeout(int seconds) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getLoginTimeout() throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public java.util.logging.Logger getParentLogger() throws SQLFeatureNotSupportedException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T> T unwrap(Class<T> iface) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isWrapperFor(Class<?> iface) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Connection getConnection(String username, String password) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
