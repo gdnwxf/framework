@@ -127,44 +127,37 @@ public class DataSource implements javax.sql.DataSource {
 
 	@Override
 	public void setLogWriter(PrintWriter out) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		DriverManager.setLogWriter(out);
 	}
 
 	@Override
 	public void setLoginTimeout(int seconds) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		DriverManager.setLoginTimeout(seconds);
 	}
 
 	@Override
 	public int getLoginTimeout() throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		return DriverManager.getLoginTimeout();
 	}
 
 	@Override
 	public java.util.logging.Logger getParentLogger() throws SQLFeatureNotSupportedException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public <T> T unwrap(Class<T> iface) throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean isWrapperFor(Class<?> iface) throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public Connection getConnection(String username, String password) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return DriverManager.getConnection(properties.getProperty(URL), username, password);
 	}
 
 }
