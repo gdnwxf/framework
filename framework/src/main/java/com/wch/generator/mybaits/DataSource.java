@@ -157,7 +157,8 @@ public class DataSource implements javax.sql.DataSource {
 
 	@Override
 	public Connection getConnection(String username, String password) throws SQLException {
-		return DriverManager.getConnection(properties.getProperty(URL), username, password);
+		throw new UnsupportedOperationException("获取连接的方式不对!");
+//		return DriverManager.getConnection(properties.getProperty(URL), username, password);
 	}
 
 }
