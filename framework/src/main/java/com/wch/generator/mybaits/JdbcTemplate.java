@@ -39,7 +39,12 @@ public class JdbcTemplate {
 		this.dataSource = dataSource;
 		this.isPreperedStatement = true;
 	}
-
+	
+	public static JdbcTemplate defaultTemplate() 
+	{
+		return new JdbcTemplate(new DataSource());
+	}
+	
 	private List<?> selectList(String sql, Translate translate, Class<?> clazz,
 			boolean isSingle , Object ... params) {
 		Connection connection = null;
@@ -207,8 +212,7 @@ public class JdbcTemplate {
 	}
 
 	public static void main(String[] args) {
-		DataSource dataSource = new DataSource();
-		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		JdbcTemplate jdbcTemplate =  JdbcTemplate.defaultTemplate();
 		Map<String, Object> params = new HashMap<>();
 		params.put("id", 1);	
 		List<UserInfo> selectList = jdbcTemplate.selectList(" select * from  user_info where id =:id " , UserInfo.class , params);
