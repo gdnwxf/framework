@@ -45,11 +45,8 @@ public class Translate {
 					}
 				}
 			} catch (InstantiationException e) {
-				e.printStackTrace();
 			} catch (IllegalAccessException e) {
-				e.printStackTrace();
 			} catch (IntrospectionException e) {
-				e.printStackTrace();
 			}
 			return t2;
 	}

@@ -1,12 +1,5 @@
 package com.wch.generator.mybaits;
 
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
-import java.beans.PropertyEditor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,8 +15,6 @@ import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import sun.util.logging.resources.logging;
 
 public class JdbcTemplate {
 	
@@ -48,6 +39,7 @@ public class JdbcTemplate {
 		this.isPreperedStatement = true;
 	}
 
+	@SuppressWarnings("unchecked")
 	private List<?> selectList(String sql, Translate translate, Class clazz,
 			boolean isSingle , Object ... params) {
 		Connection connection = null;
@@ -194,9 +186,9 @@ public class JdbcTemplate {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		Map<String, Object> params = new HashMap<>();
 		params.put("id", 1);	
-		List<UserInfo> selectList = jdbcTemplate.selectList(" select * from  userinfo where id =:id " , UserInfo.class , params);
-		List<Map<String, Object>> selectList2 = jdbcTemplate.selectList(" show index from goods_purchase  " );
-		System.out.println(selectList2);
+		List<UserInfo> selectList = jdbcTemplate.selectList(" select * from  user_info where id =:id " , UserInfo.class , params);
+//		List<Map<String, Object>> selectList2 = jdbcTemplate.selectList(" show index from goods_purchase  " );
+		System.out.println(selectList);
 	}
 }
 
