@@ -175,10 +175,10 @@ public class JdbcTemplate {
 		return (List<T>) selectList(sql, null, t, false , params);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public  List<Map<String, Object>> selectList(String sql, Object ... params) {
 		return (List<Map<String, Object>>) selectList(sql,null,null,false, params);
 	}
-
 
 	
 	public static void main(String[] args) {
