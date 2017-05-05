@@ -207,48 +207,6 @@ public class JdbcTemplate {
 		return (List<Map<String, Object>>) selectList(sql,null,null,false, params);
 	}
 
-	@SuppressWarnings("unused")
-	private class Node implements Serializable{
-		
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-		private String key;
-		private Object object;
-		
-		public Node() {
-		}
-		
-		public Node(String key,Object object) {
-			this.key = key;
-			this.object = object;
-		}
-		
-		public String getKey() {
-			return key;
-		}
-
-		public void setKey(String key) {
-			this.key = key;
-		}
-		public Object getObject() {
-			return object;
-		}
-
-		public void setObject(Object object) {
-			this.object = object;
-		}
-
-		@Override
-		public String toString() {
-			return "key=" + key + ", object=" + object ;
-		}
-
-		
-	}
-	
-	
 	public static void main(String[] args) {
 		DataSource dataSource = new DataSource();
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
