@@ -31,6 +31,9 @@ public class DataSource implements javax.sql.DataSource {
 	private static Properties properties = null;
 
 	private static final String MAX_CONNECTION = "maxConnection";
+	
+	/** show_sql */
+	private static final String SHOW_SQL = "show_sql";
 
 	/**
 	 * 超时时间 ms
@@ -40,6 +43,8 @@ public class DataSource implements javax.sql.DataSource {
 	private static BlockingQueue<Connection> connections;
 
 	private static Long timeOut;
+	
+	private static boolean showSql = false;
 
 	static {
 		try {
@@ -59,6 +64,8 @@ public class DataSource implements javax.sql.DataSource {
 
 			connections = new ArrayBlockingQueue<Connection>(maxConnections);
 
+			showSql = properties.getProperty(SHOW_SQL) == null ? null : Boolean.parseBoolean(properties.getProperty(SHOW_SQL));
+			
 			for (int i = 0; i < maxConnections; i++) {
 				java.sql.Connection connection = DriverManager.getConnection(properties.getProperty(URL), properties);
 				connections.put(connection);
@@ -159,6 +166,11 @@ public class DataSource implements javax.sql.DataSource {
 	public Connection getConnection(String username, String password) throws SQLException {
 		throw new UnsupportedOperationException("获取连接的方式不对!");
 //		return DriverManager.getConnection(properties.getProperty(URL), username, password);
+	}
+	
+	public boolean showSql()
+	{
+		return showSql;
 	}
 
 }

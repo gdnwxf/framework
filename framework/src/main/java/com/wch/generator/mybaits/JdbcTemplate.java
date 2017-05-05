@@ -1,5 +1,6 @@
 package com.wch.generator.mybaits;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,6 +8,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 public class JdbcTemplate {
 	
-	private static Logger logger = LoggerFactory.getLogger(DataSource.class);
+	private static Logger logger = LoggerFactory.getLogger(JdbcTemplate.class);
 
 	/** The Constant pattern. :[\\w\\W]+?\\b */
 	private final Pattern pattern = Pattern.compile(":[\\w\\W]+?\\b");
@@ -26,7 +28,7 @@ public class JdbcTemplate {
 	private DataSource dataSource;
 
 	private boolean isPreperedStatement = true;
-
+	
 	public JdbcTemplate(DataSource dataSource, Boolean isPreperedStatement) {
 		this.dataSource = dataSource;
 		if (isPreperedStatement != null) {
@@ -39,8 +41,7 @@ public class JdbcTemplate {
 		this.isPreperedStatement = true;
 	}
 
-	@SuppressWarnings("unchecked")
-	private List<?> selectList(String sql, Translate translate, Class clazz,
+	private List<?> selectList(String sql, Translate translate, Class<?> clazz,
 			boolean isSingle , Object ... params) {
 		Connection connection = null;
 		PreparedStatement ps = null;
@@ -118,6 +119,12 @@ public class JdbcTemplate {
 			if (isPreperedStatement) {
 				statement = connection.prepareStatement(sql);
 			}
+
+			if(dataSource.showSql())
+			{
+				logger.debug("sql: {}", sql);
+				
+			}
 			
 		} else if (params[0] instanceof Map) {
 			@SuppressWarnings("unchecked")
@@ -144,25 +151,45 @@ public class JdbcTemplate {
 				}
 			}
 
+			if(dataSource.showSql())
+			{
+				logger.debug("sql: {}", sql);
+				
+			}
+			
 			if (list != null && list.size() > 0) {
 				statement = connection.prepareStatement(sql);
 				Object[] mapObjects = list.toArray(new Object[list.size()]);
+				if(dataSource.showSql())
+				{
+					logger.debug("params: {}", Arrays.toString(mapObjects));
+					
+				}
 				for (int i = 0; i < mapObjects.length; i++) {
 					((PreparedStatement) statement).setObject(i + 1, mapObjects[i]);
 				}
 			}
+			
 		} else if (params instanceof Object[]) {
 			if (!isPreperedStatement) {
 				throw new SQLException("不支持此类型的参数!");
 			}
 			statement = connection.prepareStatement(sql);
 			Object[] objects = (Object[]) params;
+			if(dataSource.showSql())
+			{
+				logger.debug("params: {}",Arrays.toString(objects));
+				
+			}
 			for (int i = 0; i < objects.length; i++) {
 				((PreparedStatement) statement).setObject(i + 1, objects[i]);
 			}
 		} else {
 			throw new SQLException("不支持此类型的参数!");
 		}
+		
+		
+		
 		return statement;
 	}
 
@@ -180,6 +207,47 @@ public class JdbcTemplate {
 		return (List<Map<String, Object>>) selectList(sql,null,null,false, params);
 	}
 
+	@SuppressWarnings("unused")
+	private class Node implements Serializable{
+		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private String key;
+		private Object object;
+		
+		public Node() {
+		}
+		
+		public Node(String key,Object object) {
+			this.key = key;
+			this.object = object;
+		}
+		
+		public String getKey() {
+			return key;
+		}
+
+		public void setKey(String key) {
+			this.key = key;
+		}
+		public Object getObject() {
+			return object;
+		}
+
+		public void setObject(Object object) {
+			this.object = object;
+		}
+
+		@Override
+		public String toString() {
+			return "key=" + key + ", object=" + object ;
+		}
+
+		
+	}
+	
 	
 	public static void main(String[] args) {
 		DataSource dataSource = new DataSource();
@@ -190,6 +258,9 @@ public class JdbcTemplate {
 //		List<Map<String, Object>> selectList2 = jdbcTemplate.selectList(" show index from goods_purchase  " );
 		System.out.println(selectList);
 	}
+
+	
+	
 }
 
 
