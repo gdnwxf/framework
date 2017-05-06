@@ -1,4 +1,4 @@
-package com.wch.generator.mybaits;
+package com.wch.generator.mybaits.dbcore;
 
 import java.io.IOException;
 import java.io.PrintWriter;

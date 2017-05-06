@@ -1,4 +1,4 @@
-package com.wch.generator.mybaits;
+package com.wch.generator.mybaits.dbcore;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,6 +16,9 @@ import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.wch.generator.mybaits.CamelCaseUtils;
+import com.wch.generator.mybaits.UserInfo;
 
 public class JdbcTemplate {
 	
