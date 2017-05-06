@@ -10,6 +10,11 @@ import java.lang.reflect.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * @author wch
+ * @date 2017年5月6日 上午10:59:35
+ */
 public class Translate {
 	
 	private static Logger logger = LoggerFactory.getLogger(DataSource.class);

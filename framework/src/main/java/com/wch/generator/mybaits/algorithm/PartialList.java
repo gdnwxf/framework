@@ -2,7 +2,11 @@ package com.wch.generator.mybaits.algorithm;
 
 import java.util.List;
 
-
+/**
+ * 
+ * @author wch
+ * @date 2017年5月6日 上午10:58:57
+ */
 public class PartialList {
 
 	public static <T extends Object> int cyclicHandle(List<T> list ,Integer step , PartialHandler<T> partialHandler){

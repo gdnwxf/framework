@@ -19,7 +19,11 @@ import org.slf4j.LoggerFactory;
 
 import com.wch.generator.mybaits.CamelCaseUtils;
 import com.wch.generator.mybaits.UserInfo;
-
+/**
+ * 
+ * @author wch
+ * @date 2017年5月6日 上午10:59:29
+ */
 public class JdbcTemplate {
 	
 	private static Logger logger = LoggerFactory.getLogger(JdbcTemplate.class);

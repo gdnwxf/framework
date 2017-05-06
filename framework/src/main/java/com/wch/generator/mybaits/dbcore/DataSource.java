@@ -14,6 +14,11 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * @author wch
+ * @date 2017年5月6日 上午10:59:20
+ */
 public class DataSource implements javax.sql.DataSource {
 
 	private static Logger logger = LoggerFactory.getLogger(DataSource.class);
