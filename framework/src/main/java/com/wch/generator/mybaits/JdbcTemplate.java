@@ -205,10 +205,28 @@ public class JdbcTemplate {
 	public <T> List<T> selectList(String sql,  Class<T> t , Object ... params) {
 		return (List<T>) selectList(sql, null, t, false , params);
 	}
+	@SuppressWarnings("unchecked")
+	public <T> T selectSignal(String sql,  Class<T> t , Object ... params) {
+		List<?> selectList = selectList(sql, null, t, true , params);
+		if(selectList ==null || selectList.size() ==0 )
+		{
+			return null;
+		}
+		return (T) selectList.get(0);
+	}
 	
 	@SuppressWarnings("unchecked")
 	public  List<Map<String, Object>> selectList(String sql, Object ... params) {
 		return (List<Map<String, Object>>) selectList(sql,null,null,false, params);
+	}
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> selectSignal(String sql, Object ... params) {
+		List<?> selectList = selectList(sql,null,null,true, params);
+		if(selectList ==null || selectList.size() ==0 )
+		{
+			return null;
+		}
+		return  (Map<String, Object>) selectList.get(0);
 	}
 
 	public static void main(String[] args) {
