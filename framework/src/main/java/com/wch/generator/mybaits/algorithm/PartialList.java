@@ -22,7 +22,7 @@ public class PartialList {
 			  totalRefectRow += resultRow;
 		}else {
 			//当当前的fromIndex　<＝ 总size的时候结束循环
-			while ( fromIndex < totalSize ) {
+			for (; fromIndex < totalSize ;) {
 				List<T> subList = list.subList(fromIndex, toIndex);
 				resultRow = partialHandler.handle(subList);
 				totalRefectRow += resultRow;
