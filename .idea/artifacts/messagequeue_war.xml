@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="messagequeue:war">
-    <output-path>$PROJECT_DIR$/messagequeue/target</output-path>
-    <root id="archive" name="messagequeue.war">
-      <element id="artifact" artifact-name="messagequeue:war exploded" />
-    </root>
-  </artifact>
-</component>

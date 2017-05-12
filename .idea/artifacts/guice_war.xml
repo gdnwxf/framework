@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="guice:war">
-    <output-path>$PROJECT_DIR$/guice/target</output-path>
-    <root id="archive" name="guice.war">
-      <element id="artifact" artifact-name="guice:war exploded" />
-    </root>
-  </artifact>
-</component>
