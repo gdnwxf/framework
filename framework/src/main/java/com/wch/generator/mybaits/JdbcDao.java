@@ -1,6 +1,5 @@
-/**
- * 
- */
+
+ 
 package com.wch.generator.mybaits;
 
 import java.util.List;

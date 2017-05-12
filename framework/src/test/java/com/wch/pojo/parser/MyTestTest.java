@@ -1,7 +1,5 @@
 package com.wch.pojo.parser;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by wch on 2016/5/22.
  */

@@ -11,13 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-/**
- * 请在此处添加注释.
- *
- * @author <a href="mailto:wangch@zjport.gov.cn">wangch</a>
- * @version $Id: Glog.java 38 2015-11-28 13:47:20Z wch $
- * @since 2.0
- */
+
 public class Glog {
 
 	/** The Constant GLOG_PROPERTIES. */

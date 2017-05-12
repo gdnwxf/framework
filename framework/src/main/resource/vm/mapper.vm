@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dfire.retail.mapper.account.AccountMoneyFlowMapper" >
+
+   <resultMap id="CompanionMoneyFlowMap" type="com.dfire.retail.bo.account.AccountMoneyFlow" >
+        <id column="ID" property="id" jdbcType="INTEGER" />
+        <result column="Entity_Id" property="entityId" jdbcType="VARCHAR" />
+    	<result column="companion_account_id" property="companionAccountId" jdbcType="VARCHAR" />
+        <result column="Action" property="action" jdbcType="TINYINT" />
+        <result column="Fee" property="fee" jdbcType="DECIMAL" />
+        <result column="Balance" property="balance" jdbcType="DECIMAL" />
+        <result column="is_valid" property="isValid" jdbcType="TINYINT" />
+        <result column="Create_Time" property="createTime" jdbcType="INTEGER" />
+    </resultMap>
+
+  <resultMap id="BaseResultMap" type="com.dfire.retail.bo.account.AccountMoneyFlow" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="entity_id" property="entityId" jdbcType="VARCHAR" />
+    <result column="companion_account_id" property="companionAccountId" jdbcType="VARCHAR" />
+    <result column="companion_account_type" property="companionAccountType" jdbcType="TINYINT" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="Action" property="action" jdbcType="TINYINT" />
+    <result column="withdraw_check_id" property="withdrawCheckId" jdbcType="INTEGER" />
+    <result column="Fee" property="fee" jdbcType="DECIMAL" />
+    <result column="Balance" property="balance" jdbcType="DECIMAL" />
+    <result column="Create_Time" property="createTime" jdbcType="INTEGER" />
+    <result column="is_valid" property="isValid" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, entity_id, companion_account_id, companion_account_type, order_id, action, fee, 
+    balance, create_Time, is_valid,withdraw_check_id,order_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from account_money_flow
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from account_money_flow
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dfire.retail.bo.account.AccountMoneyFlow" >
+    insert into account_money_flow (entity_id, companion_account_id, 
+      companion_account_type, order_id, Action, withdraw_check_id,
+      Fee, Balance, Create_Time, 
+      is_valid)
+    values (#{entityId,jdbcType=VARCHAR}, #{companionAccountId,jdbcType=VARCHAR}, 
+      #{companionAccountType,jdbcType=TINYINT}, #{orderId,jdbcType=VARCHAR}, #{action,jdbcType=TINYINT}, 
+      #{withdrawCheckId,jdbcType=INTEGER},#{fee,jdbcType=DECIMAL}, #{balance,jdbcType=DECIMAL}, #{createTime,jdbcType=INTEGER},
+      #{isValid,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dfire.retail.bo.account.AccountMoneyFlow" >
+    insert into account_money_flow
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="entityId != null" >
+        entity_id,
+      </if>
+      <if test="companionAccountId != null" >
+        companion_account_id,
+      </if>
+      <if test="companionAccountType != null" >
+        companion_account_type,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="action != null" >
+        Action,
+      </if>
+      <if test="withdrawCheckId != null" >
+          withdraw_check_id,
+      </if>
+      <if test="fee != null" >
+        Fee,
+      </if>
+      <if test="balance != null" >
+        Balance,
+      </if>
+      <if test="createTime != null" >
+        Create_Time,
+      </if>
+      <if test="isValid != null" >
+        is_valid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="entityId != null" >
+        #{entityId,jdbcType=VARCHAR},
+      </if>
+      <if test="companionAccountId != null" >
+        #{companionAccountId,jdbcType=VARCHAR},
+      </if>
+      <if test="companionAccountType != null" >
+        #{companionAccountType,jdbcType=TINYINT},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="action != null" >
+        #{action,jdbcType=TINYINT},
+      </if>
+        <if test="withdrawCheckId != null" >
+            #{withdrawCheckId,jdbcType=INTEGER},
+        </if>
+      <if test="fee != null" >
+        #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="isValid != null" >
+        #{isValid,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dfire.retail.bo.account.AccountMoneyFlow" >
+    update account_money_flow
+    <set >
+      <if test="entityId != null" >
+        entity_id = #{entityId,jdbcType=VARCHAR},
+      </if>
+      <if test="companionAccountId != null" >
+        companion_account_id = #{companionAccountId,jdbcType=VARCHAR},
+      </if>
+      <if test="companionAccountType != null" >
+        companion_account_type = #{companionAccountType,jdbcType=TINYINT},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="action != null" >
+        Action = #{action,jdbcType=TINYINT},
+      </if>
+      <if test="fee != null" >
+        Fee = #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="balance != null" >
+        Balance = #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        Create_Time = na{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="isValid != null" >
+        is_valid = #{isValid,jdbcType=TINYINT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dfire.retail.bo.account.AccountMoneyFlow" >
+    update account_money_flow
+    set entity_id = #{entityId,jdbcType=VARCHAR},
+      companion_account_id = #{companionAccountId,jdbcType=VARCHAR},
+      companion_account_type = #{companionAccountType,jdbcType=TINYINT},
+      order_id = #{orderId,jdbcType=VARCHAR},
+      Action = #{action,jdbcType=TINYINT},
+      Fee = #{fee,jdbcType=DECIMAL},
+      Balance = #{balance,jdbcType=DECIMAL},
+      Create_Time = #{createTime,jdbcType=INTEGER},
+      is_valid = #{isValid,jdbcType=TINYINT}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

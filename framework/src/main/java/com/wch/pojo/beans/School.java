@@ -1,5 +1,8 @@
 package com.wch.pojo.beans;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class School {
 	private int id ;
 	private String  scName ;
@@ -26,5 +29,10 @@ public class School {
 	 */
 	public void setScName(String scName) {
 		this.scName = scName;
+	}
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,ToStringStyle.DEFAULT_STYLE);
 	}
 }

@@ -34,6 +34,11 @@
 		<!-- 导入Mapper -->
 		<property name="mapperLocations" value="classpath:config/dao/sqlmap/**/*.xml" />
 	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+<!--         <property name="basePackage" value="com.dfire.retail.**.mapper" /> -->
+        <property name="basePackage" value="com.wch.dao.mapper" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+    </bean>
 	<!-- 配置mybatis 与 spring结合 -->
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
@@ -53,13 +58,18 @@
 				<prop key="delete*">PROPAGATION_REQUIRED</prop>
 				<prop key="log*">PROPAGATION_REQUIRED</prop>
 				<prop key="doProcess*">PROPAGATION_REQUIRED</prop>
+				<prop key="new*">PROPAGATION_REQUIRES_NEW</prop>
 				<prop key="audit">PROPAGATION_REQUIRED</prop>
 				<prop key="send*">PROPAGATION_REQUIRED</prop>
-				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="*">PROPAGATION_SUPPORTS,readOnly</prop>
+<!-- 				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop> -->
 			</props>
 		</property>
 	</bean>
 
+    <!-- 使用annotation定义事务 -->
+<!--     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" /> -->
+    
 	<!-- 事务相关 -->
 	<bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"/>
@@ -79,4 +89,5 @@
 	<bean class="org.springframework.transaction.interceptor.TransactionAttributeSourceAdvisor">
 		<property name="transactionInterceptor" ref="transactionInterceptor" />
 	</bean>
+	<bean id="springSwaggerConfig" class="com.mangofactory.swagger.configuration.SpringSwaggerConfig" />
 </beans>

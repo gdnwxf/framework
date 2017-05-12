@@ -1,53 +1,79 @@
 package com.wch.test;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashSet;
+
 public class MyClassloader extends ClassLoader {
 
-	
-	@Override
-	public Class<?> loadClass(String name) throws ClassNotFoundException {
-		return this.loadClass(name,true);
-	}
-	
-	 protected Class<?> loadClass(String name, boolean resolve)
-		        throws ClassNotFoundException
-		    {
-		        synchronized (getClassLoadingLock(name)) {
-		            // First, check if the class has already been loaded
-		            Class<?> c = null;
-		            if (c == null) {
-		                long t0 = System.nanoTime();
-		                try {
-		                	
-		                	   ClassLoader parent = super.getParent();
-					 
-		                    if (parent != null) {
-		                        c =  parent.loadClass(name);
-		                    } else {
-//		                        c = findBootstrapClassOrNull(name);
-//		                        if (!checkName(name)) return null;
-//
-//		                        return findBootstrapClass(name);
-		                    }
-		                } catch (ClassNotFoundException e) {
-		                    // ClassNotFoundException thrown if class not found
-		                    // from the non-null parent class loader
-		                }
 
-		                if (c == null) {
-		                    // If still not found, then invoke findClass in order
-		                    // to find the class.
-		                    long t1 = System.nanoTime();
-		                    c = findClass(name);
+	private String basedir; // 需要该类加载器直接加载的类文件的基目录
+    private HashSet dynaclazns; // 需要由该类加载器直接加载的类名
 
-		                    // this is the defining class loader; record the stats
-		                    sun.misc.PerfCounter.getParentDelegationTime().addTime(t1 - t0);
-		                    sun.misc.PerfCounter.getFindClassTime().addElapsedTimeFrom(t1);
-		                    sun.misc.PerfCounter.getFindClasses().increment();
-		                }
-		            }
-		            
-		            return c;
-		        }
-		    }
-	 
+    public MyClassloader(String basedir, String[] clazns) throws IOException { 
+        super(null); // 指定父类加载器为 null 
+        this.basedir = basedir; 
+        dynaclazns = new HashSet(); 
+        loadClassByMe(clazns); 
+    } 
+
+    private void loadClassByMe(String[] clazns) throws IOException { 
+        for (int i = 0; i < clazns.length; i++) { 
+            loadDirectly(clazns[i]); 
+            dynaclazns.add(clazns[i]); 
+        } 
+    } 
+
+    private Class loadDirectly(String name) throws IOException { 
+        Class cls = null; 
+        StringBuffer sb = new StringBuffer(basedir); 
+        String classname = name.replace('.', File.separatorChar) + ".class";
+        sb.append(File.separator + classname); 
+        File classF = new File(sb.toString()); 
+        cls = instantiateClass(name,new FileInputStream(classF),
+            classF.length()); 
+        return cls; 
+    }   		
+
+    private Class instantiateClass(String name,InputStream fin,long len) throws IOException{ 
+        byte[] raw = new byte[(int) len]; 
+        fin.read(raw); 
+        fin.close(); 
+        return defineClass(name,raw,0,raw.length); 
+    } 
+    
+	protected Class loadClass(String name, boolean resolve) 
+            throws ClassNotFoundException { 
+		System.out.println(  " ---> " +name);
+        Class cls = null; 
+	    if(name.startsWith("java.")){
+            try {
+                //得到系统默认的加载cl，即AppClassLoader
+                ClassLoader system = ClassLoader.getSystemClassLoader();
+                cls = system.loadClass(name);
+                if (cls != null) {
+                    if (resolve)
+                        resolveClass(cls);
+                   return (cls);
+                }
+            } catch (ClassNotFoundException e) {
+                // Ignore
+            }
+        }
+
+	
+        cls = findLoadedClass(name); 
+        if(!this.dynaclazns.contains(name) && cls == null) 
+            cls = getSystemClassLoader().loadClass(name); 
+        if (cls == null) 
+            throw new ClassNotFoundException(name); 
+        if (resolve) 
+            resolveClass(cls); 
+        return cls; 
+    } 
+	
+	
 }

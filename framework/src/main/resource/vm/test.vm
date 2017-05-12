@@ -1,0 +1,17 @@
+names
+#foreach($param in $names)  
+         $param 
+ #end  
+ 
+ #if( $vals.size() == 0)  
+   \$vals.size() == 0
+ #end
+  
+ 
+#foreach($p1 in $vals)  
+         $p1 
+ #end   
+ 
+ #if($valsa == "123") 
+ ${valsa}
+ #end

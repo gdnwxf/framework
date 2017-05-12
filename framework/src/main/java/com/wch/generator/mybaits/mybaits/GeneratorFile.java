@@ -7,23 +7,19 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.api.VerboseProgressCallback;
 import org.mybatis.generator.config.CommentGeneratorConfiguration;
-import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.JDBCConnectionConfiguration;
-import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
 import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
 import org.mybatis.generator.config.JavaTypeResolverConfiguration;
 import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
 import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.XMLParserException;
-import org.mybatis.generator.internal.util.StringUtility;
 import org.mybatis.generator.internal.util.messages.Messages;
 
 public class GeneratorFile {
@@ -48,7 +44,7 @@ public class GeneratorFile {
 		JDBCConnectionConfiguration jdbcInfo = new JDBCConnectionConfiguration();
 		jdbcInfo.setUserId("retail");
 		jdbcInfo.setPassword("retail552208");
-		jdbcInfo.setConnectionURL("jdbc:mysql://10.1.1.20:3306/retail");
+		jdbcInfo.setConnectionURL("jdbc:mysql://10.1.5.113:3306/retail");
 		jdbcInfo.setDriverClass("com.mysql.jdbc.Driver");
 		context.setJdbcConnectionConfiguration(jdbcInfo);
 		
@@ -68,7 +64,7 @@ public class GeneratorFile {
 		javaTypeResolver.addProperty("forceBigDecimals", "false");
 		context.setJavaTypeResolverConfiguration(javaTypeResolver);
 		
-		TableConfiguration tc = getTableConfig(context, "discountgoods", "discountgoods");
+		TableConfiguration tc = getTableConfig(context, "saleskindcard", "saleskindcard");
 	    context.addTableConfiguration(tc);
 
 	    JavaModelGeneratorConfiguration javaModel = new JavaModelGeneratorConfiguration();

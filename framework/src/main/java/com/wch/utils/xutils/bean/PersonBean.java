@@ -9,9 +9,9 @@ package com.wch.utils.xutils.bean;
  */
 public class PersonBean {
 
-	private int id;
+	private Integer id;
 	private String name ;
-	private int age ;
+	private Integer age ;
 	private String mN = "------" ;
 	private DepartInfo departInfo;
 	/**
@@ -29,13 +29,13 @@ public class PersonBean {
 	/**
 	 * @return the age
 	 */
-	public int getAge() {
+	public Integer getAge() {
 		return age;
 	}
 	/**
 	 * @param age the age to set
 	 */
-	public void setAge(int age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
  
@@ -51,10 +51,10 @@ public class PersonBean {
 	public void setDepartInfo(DepartInfo departInfo) {
 		this.departInfo = departInfo;
 	}
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 }

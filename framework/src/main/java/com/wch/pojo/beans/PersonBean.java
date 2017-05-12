@@ -3,6 +3,9 @@
  */
 package com.wch.pojo.beans;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 /**
  * @author Administrator
  *
@@ -61,5 +64,11 @@ public class PersonBean {
 	 */
 	public void setDepartInfo(DepartInfo departInfo) {
 		this.departInfo = departInfo;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,ToStringStyle.DEFAULT_STYLE);
 	}
 }

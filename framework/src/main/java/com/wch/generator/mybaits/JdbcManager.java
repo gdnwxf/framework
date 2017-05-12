@@ -9,7 +9,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 
@@ -138,23 +143,30 @@ public class JdbcManager {
 	 */
 	public static void main(String[] args) throws SQLException {
 		Connection connection = getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement("select * from userinfo");
+//		PreparedStatement preparedStatement = connection.prepareStatement(" show create table goods_purchase ");
+		PreparedStatement preparedStatement = connection.prepareStatement(" show index from goods_purchase ");
+//		PreparedStatement preparedStatement = connection.prepareStatement(" desc goods_purchase ");
+//		PreparedStatement preparedStatement = connection.prepareStatement("select * from  information_schema.columns ");
 		ResultSet resultSet = preparedStatement.executeQuery();
 		ResultSetMetaData metaData = resultSet.getMetaData();
-		for (int i = 1; i < metaData.getColumnCount(); i++) {
+		int columnCount = metaData.getColumnCount();
+		for (int i = 1; i < columnCount; i++) {
 			System.out.println( metaData.getColumnName(i));
 			System.out.println( metaData.getColumnType(i));
 		}
 		
 		
 		while (resultSet.next() ) {
-//			System.out.println(resultSet.getObject(0));
+			for (int i = 1; i <= columnCount; i++) {
+				System.out.print(resultSet.getObject(i) + " ");
+			}
+			System.out.println();
 		}
 	
 		DatabaseMetaData dataBaseMetaData = connection.getMetaData();
 		ResultSet primaryKeys = dataBaseMetaData.getPrimaryKeys(null, null, "userinfo");
 		ResultSetMetaData metaData2 = primaryKeys.getMetaData();
-		int columnCount = metaData2.getColumnCount();
+		  columnCount = metaData2.getColumnCount();
 		for (int i = 1; i < columnCount + 1; i++) {
 			System.out.println(metaData2.getColumnName(i));
 		}
@@ -184,4 +196,65 @@ public class JdbcManager {
 		connection.close();
 	}
 
+	
+	public List<Column> getColumns(String schema, String... tableName)
+	{
+		List<Column> columns = null ;
+		
+		String sql = "select * from columns where " ;
+		if(StringUtils.isNoneBlank(schema))
+		{
+			sql += " TABLE_SCHEMA = " + schema;
+		}
+		
+		String tableNameSql = this.join(Arrays.asList(tableName), ",", "'");
+		if(StringUtils.isNoneBlank(tableNameSql))
+		{
+			sql += " table_name in ( " + tableNameSql + ")";
+		}
+		
+		
+		 
+		
+		return columns;
+	}
+	
+	
+	private String join(List<?> list, String spilt , String separator ) {
+   	 // handle null, zero and one elements before building a buffer
+	   if (list == null) {
+         return null;
+      }
+   	Iterator<?> iterator = list.iterator();
+       if (iterator == null) {
+           return null;
+       }
+       if (!iterator.hasNext()) {
+           return StringUtils.EMPTY;
+       }
+       Object first = iterator.next();
+       if (!iterator.hasNext()) {
+           return first == null ? "" :  spilt+first.toString()+ spilt;
+       }
+
+       // two or more elements
+       StringBuilder buf = new StringBuilder(256); // Java default is 16, probably too small
+       if (first != null) {
+           buf.append(spilt);
+           buf.append(first);
+           buf.append(spilt);
+       }
+
+       while (iterator.hasNext()) {
+           buf.append(separator);
+           Object obj = iterator.next();
+           if (obj != null) {
+               buf.append(spilt);
+               buf.append(obj);
+               buf.append(spilt);
+           }
+       }
+
+   	return buf.toString();
+   }
 }

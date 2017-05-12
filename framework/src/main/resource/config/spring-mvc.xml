@@ -20,17 +20,35 @@
 
 	<!-- 启用注解装配(@Autowired)-->
 	 <context:annotation-config />
-
+	   <mvc:annotation-driven ><!--启用注解驱动 -->
+        <mvc:message-converters  register-defaults="true">
+            <!-- fastjosn spring support --> 
+             <bean id="fastJsonHttpMessageConverter" class="com.wch.filter.FastJsonHttpMessageConverter"> 
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/html;charset=UTF-8</value><!-- 避免IE出现下载JSON文件的情况 -->
+                        </list>
+                    </property> 
+             </bean> 
+        </mvc:message-converters>
+    </mvc:annotation-driven>
 	<!-- 启动Spring的组件自动扫描机制 -->
 	<context:component-scan base-package="com.wch.controller,com.wch.service" ></context:component-scan>
 
 	<!-- 完成请求和注解POJO的映射 --><!--
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />-->
 
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"  >
+<!--     	 <property name="uploadTempDir" value = "d:/temp"></property> -->
+    </bean>
 	<!-- ViewResolver配置(视图解析器) -->
 	<bean id="ViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-
+		 	    <!-- 所有swagger目录的访问，直接访问location指定的目录 -->
+	<mvc:resources mapping="/swagger/**" location="/WEB-INF/swagger/"/>
+    <!-- 对静态资源文件的访问 不支持访问WEB-INF目录 -->  
+    <mvc:default-servlet-handler />  
+	<bean id="springSwaggerConfig" class="com.mangofactory.swagger.configuration.SpringSwaggerConfig" />
 </beans>
