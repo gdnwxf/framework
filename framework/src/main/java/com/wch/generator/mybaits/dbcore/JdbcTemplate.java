@@ -35,16 +35,22 @@ public class JdbcTemplate {
 
 	private boolean isPreperedStatement = true;
 	
+	private static Transaction transaction = null;
+	
+	private volatile ThreadLocal<Connection> connHolder = new ThreadLocal<>();
+	
+	private volatile int status = 0;
+	
 	public JdbcTemplate(DataSource dataSource, Boolean isPreperedStatement) {
 		this.dataSource = dataSource;
+		transaction = new MyTransaction();
 		if (isPreperedStatement != null) {
 			this.isPreperedStatement = isPreperedStatement;
 		}
 	}
 
 	public JdbcTemplate(DataSource dataSource) {
-		this.dataSource = dataSource;
-		this.isPreperedStatement = true;
+		 this(dataSource, true);
 	}
 	
 	public static JdbcTemplate defaultTemplate() 
@@ -59,7 +65,7 @@ public class JdbcTemplate {
 		ResultSet rs = null;
 		List<Object> list = null;
 		try {
-			connection = dataSource.getConnection();
+			connection = getConnection();
 			if (isPreperedStatement) {
 				PreparedStatement statement = (PreparedStatement) getStatement(connection, sql, params);
 				rs = statement.executeQuery();
@@ -101,7 +107,7 @@ public class JdbcTemplate {
 					rs.close();
 				if (ps != null)
 					ps.close();
-				if (connection != null)
+				if (connection != null && (status != 1))
 					dataSource.close(connection);
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -235,14 +241,133 @@ public class JdbcTemplate {
 		}
 		return  (Map<String, Object>) selectList.get(0);
 	}
+	
+	private Connection getConnection() throws SQLException{
+		//此时表示开启事务
+		Connection connection = connHolder.get();
+		
+		if(connection != null)
+		{
+			if(status == 1) {
+				logger.debug(" 缓存中的connection信息 {} " , connection);
+				return connection;
+			} 
+			
+			if(status == 0)
+			{
+				logger.debug(" 事务未开启或已提交 ");
+				
+				connHolder.set(null);
+				dataSource.close(connection);
+			}
+		}
+		
+		return dataSource.getConnection();
+	}
+	
+	/**
+	 * 自定义的事务
+	 * @author qinghao
+	 *
+	 */
+	class MyTransaction implements Transaction
+	{
+		
+		/**
+		 * 对象的锁
+		 */
+		private final Object mutex = new Object();
+		 
+		/**
+		 * 开始事务
+		 */
+		public void begin() {
+				if (status == 1)
+					return;
+			synchronized (mutex) {
+				status = 1;
+				Connection connection = dataSource.getConnection();
+				logger.debug(" 获取事务信息 {}", connection);
+				connHolder.set(connection);
+			}
+		}
 
-	public static void main(String[] args) {
+		/**
+		 * 开始事务
+		 */
+		public void start() {
+			if (status == 1)
+				return;
+			synchronized (mutex) {
+				status = 1;
+				Connection connection = dataSource.getConnection();
+				logger.debug(" 获取事务信息 {}", connection);
+				connHolder.set(connection);
+			}
+		}
+
+		/**
+		 * 提交事务
+		 */
+		public void commit() throws IllegalStateException {
+			if(status == 2 
+					|| status == 3) {
+				throw new IllegalStateException(" 事务的状态非法 ");
+			}
+			
+			synchronized (mutex) {
+				status = 2;
+				Connection tempConn = connHolder.get();
+				connHolder.set(null);
+				dataSource.close(tempConn);
+			}
+		}
+
+		/**
+		 * 回滚事务
+		 */
+		public void rollback() {
+			if(status == 2
+					|| status == 3) {
+				throw new IllegalStateException(" 事务的状态非法 ");
+			}
+			
+			synchronized (mutex) {
+				status = 3;
+				Connection tempConn = connHolder.get();
+				connHolder.set(null);
+				
+				dataSource.close(tempConn);
+			}
+		}
+	}
+	
+	/**
+	 * 获取事务信息
+	 * @return
+	 * @throws SQLException
+	 */
+	public Transaction getTransaction()throws SQLException {
+		if(transaction == null) {
+			throw new SQLException("事务实例化失败 !!!");
+		}
+		return transaction;
+	}
+
+	public static void main(String[] args) throws IllegalStateException, SQLException {
 		JdbcTemplate jdbcTemplate =  JdbcTemplate.defaultTemplate();
+		Transaction transaction = jdbcTemplate.getTransaction();
+		transaction.start();
 		Map<String, Object> params = new HashMap<>();
 		params.put("id", 1);	
 		List<UserInfo> selectList = jdbcTemplate.selectList(" select * from  user_info where id =:id " , UserInfo.class , params);
+		selectList = jdbcTemplate.selectList(" select * from  user_info where id =:id " , UserInfo.class , params);
 //		List<Map<String, Object>> selectList2 = jdbcTemplate.selectList(" show index from goods_purchase  " );
 		System.out.println(selectList);
+		
+		transaction.commit();
+		selectList = jdbcTemplate.selectList(" select * from  user_info where id =:id " , UserInfo.class , params);
+		transaction.commit();
 	}
 
 	

@@ -114,10 +114,19 @@ public class DataSource implements javax.sql.DataSource {
 	 */
 	public Connection getConnection() {
 		try {
-			return connections.poll(timeOut, TimeUnit.MILLISECONDS);
+			Connection connection = connections.poll(timeOut, TimeUnit.MILLISECONDS);
+			if(connection == null)
+			{
+				logger.debug("获取connection超时  {}" , timeOut);
+			}
+			
+			logger.debug("获取connection信息 {}" , connToStr(connection));
+		 
+			return connection;
+			
 		} catch (InterruptedException e) {
 			return null;
-		}
+		}  
 	}
 
 	/**
@@ -128,10 +137,18 @@ public class DataSource implements javax.sql.DataSource {
 	public void close(Connection connection) {
 		try {
 			connections.put(connection);
+			logger.debug( " 回收connection 链接   {} " , connToStr(connection) );
 		} catch (InterruptedException e) {
-		}
+			;
+		}  
 	}
-
+	
+	private StringBuilder connToStr(Connection conn){
+		StringBuilder sb = new StringBuilder();
+		sb.append(conn);
+		return sb;
+	}
+	
 	@Override
 	public PrintWriter getLogWriter() throws SQLException {
 		 return DriverManager.getLogWriter();
