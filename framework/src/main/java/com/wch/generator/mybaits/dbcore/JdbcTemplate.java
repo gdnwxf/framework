@@ -58,7 +58,7 @@ public class JdbcTemplate {
 		return new JdbcTemplate(new DataSource());
 	}
 	
-	private List<?> selectList(String sql, Translate translate, Class<?> clazz,
+	private List<?> selectList(String sql, Translate<?> translate, Class<?> clazz,
 			boolean isSingle , Object ... params) {
 		Connection connection = null;
 		PreparedStatement ps = null;
@@ -210,7 +210,7 @@ public class JdbcTemplate {
 		return statement;
 	}
 
-	public List<Map<String, Object>> selectList(String sql, Map<String, Object> params, Translate translate) {
+	public List<Map<String, Object>> selectList(String sql, Map<String, Object> params, Translate<?> translate) {
 		return null;
 	}
 	
