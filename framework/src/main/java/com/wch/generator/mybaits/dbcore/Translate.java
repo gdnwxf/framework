@@ -15,11 +15,11 @@ import org.slf4j.LoggerFactory;
  * @author wch
  * @date 2017年5月6日 上午10:59:35
  */
-public class Translate {
+abstract public class Translate<E>{
 	
 	private static Logger logger = LoggerFactory.getLogger(DataSource.class);
 	
-	public Object translate(java.util.Map<String, Object> mapObject) {
+	public E translate(java.util.Map<String, Object> mapObject) {
 		// 默认用jdk的beanWarpper来实现
 		return null;
 	}

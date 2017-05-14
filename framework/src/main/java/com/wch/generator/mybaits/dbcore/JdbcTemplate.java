@@ -242,6 +242,21 @@ public class JdbcTemplate {
 		return  (Map<String, Object>) selectList.get(0);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public <T> List<T> selectList(String sql, Translate<T> translate,Object ... params) {
+		return (List<T>) selectList(sql,translate,null,false, params);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T> T selectSignal(String sql, Translate<T> translate, Object ... params) {
+		List<?> selectList = selectList(sql,translate,null,true, params);
+		if(selectList ==null || selectList.size() ==0 )
+		{
+			return null;
+		}
+		return  (T) selectList.get(0);
+	}
+	
 	private Connection getConnection() throws SQLException{
 		//此时表示开启事务
 		Connection connection = connHolder.get();
