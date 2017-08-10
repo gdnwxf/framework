@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
+import com.wch.utils.Assert;
 import com.wch.utils.date.InputStringFilter;
 
 /**
@@ -433,5 +434,7 @@ public class StringUtils {
 			scanner.close();
 		}
 	}
+
+
 	
 }
