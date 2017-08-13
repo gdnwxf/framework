@@ -51,14 +51,53 @@ public class Json2Bean {
     static Pattern pattern1 = Pattern.compile("\\{.*\\}" ,Pattern.DOTALL);
     static Pattern pattern2 = Pattern.compile("\\[.*\\]" ,Pattern.DOTALL);
 
-    @Data
+
     static class ClassInfo{
         String pkgName;
         String className;
         Set<String>  fields ;
-        Map<String , Class> fieldType ;
+        Map<String , String> fieldType = new HashMap<>();
         Map<String , Object> fieldValue ;
 
+        public String getPkgName() {
+            return pkgName;
+        }
+
+        public void setPkgName(String pkgName) {
+            this.pkgName = pkgName;
+        }
+
+        public String getClassName() {
+            return className;
+        }
+
+        public void setClassName(String className) {
+            this.className = className;
+        }
+
+        public Set<String> getFields() {
+            return fields;
+        }
+
+        public void setFields(Set<String> fields) {
+            this.fields = fields;
+        }
+
+        public Map<String, String> getFieldType() {
+            return fieldType;
+        }
+
+        public void setFieldType(Map<String, String> fieldType) {
+            this.fieldType = fieldType;
+        }
+
+        public Map<String, Object> getFieldValue() {
+            return fieldValue;
+        }
+
+        public void setFieldValue(Map<String, Object> fieldValue) {
+            this.fieldValue = fieldValue;
+        }
     }
 
     public static void main(String[] args) {
@@ -113,6 +152,28 @@ public class Json2Bean {
 
     }
 
+    private String getFieldType(Object parse ) {
+
+        //数字和字符
+
+        if(parse instanceof Number)    return "Integer";
+        if(parse instanceof Character) return "String";
+        if(parse instanceof CharSequence) return "String";
+
+
+        Class<?> aClass = parse.getClass();
+
+        if(aClass == int.class) return  "int";
+        if(aClass == short.class) return  "short";
+        if(aClass == byte.class) return  "short";
+        if(aClass == long.class) return  "long";
+        if(aClass == double.class) return  "double";
+        if(aClass == float.class) return  "float";
+
+
+        return  null;
+    }
+
 
     private static void doAnalysisObject(Object parse, List<ClassInfo> classInfos, ClassInfo classInfo) {
 
@@ -132,6 +193,7 @@ public class Json2Bean {
             strings.forEach((e)->{
                 Object o = ((JSONObject) parse).get(e);
                 doAnalysisObject(o ,classInfos, classInfo);
+
             });
         }else if(parse instanceof JSONArray) {
             Object o = ((JSONArray) parse).get(0);
